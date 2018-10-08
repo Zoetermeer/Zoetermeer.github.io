@@ -114,7 +114,7 @@ selectTeam model getNewIndex getCurIndex =
 
 view : Model -> Html Msg
 view model =
-    div [ class "scoreboard" ]
+    div [ ]
         [ mainTable model ]
 
 

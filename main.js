@@ -5257,10 +5257,7 @@ var author$project$Main$mainTable = function (model) {
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('scoreboard')
-			]),
+		_List_Nil,
 		_List_fromArray(
 			[
 				author$project$Main$mainTable(model)
