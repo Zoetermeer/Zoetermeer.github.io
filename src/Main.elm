@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Array as Array
 import Browser
-import Html exposing (Attribute, Html, button, div, h1, img, text)
+import Html exposing (Attribute, Html, button, div, h1, img, table, text, td, tr)
 import Html.Attributes exposing (align, class, height, src, style)
 import Html.Events exposing (onClick)
 
@@ -115,7 +115,7 @@ selectTeam model getNewIndex getCurIndex =
 view : Model -> Html Msg
 view model =
     div [ class "scoreboard" ]
-				[ mainTable model ]
+        [ mainTable model ]
 
 
 mainTable : Model -> Html Msg

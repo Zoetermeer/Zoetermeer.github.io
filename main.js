@@ -4484,8 +4484,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 159, column: 19},
-					end: {line: 159, column: 29}
+					start: {line: 189, column: 19},
+					end: {line: 189, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -5116,6 +5116,9 @@ var author$project$Main$gridRow = function (r) {
 };
 var elm$html$Html$h1 = _VirtualDom_node('h1');
 var elm$html$Html$img = _VirtualDom_node('img');
+var elm$html$Html$table = _VirtualDom_node('table');
+var elm$html$Html$td = _VirtualDom_node('td');
+var elm$html$Html$tr = _VirtualDom_node('tr');
 var elm$html$Html$Attributes$align = elm$html$Html$Attributes$stringProperty('align');
 var elm$html$Html$Attributes$height = function (n) {
 	return A2(
@@ -5129,6 +5132,177 @@ var elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
+var author$project$Main$mainTable = function (model) {
+	return A2(
+		elm$html$Html$table,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$td,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$align('center'),
+								elm$html$Html$Events$onClick(author$project$Main$NextAwayTeam),
+								elm$html$Html$Attributes$class('noselect')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								elm$html$Html$img,
+								_List_fromArray(
+									[
+										elm$html$Html$Attributes$src(model.awayTeam.logoUrl),
+										elm$html$Html$Attributes$height(150)
+									]),
+								_List_Nil)
+							])),
+						A2(
+						elm$html$Html$td,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$align('center'),
+								elm$html$Html$Events$onClick(author$project$Main$NextHomeTeam),
+								elm$html$Html$Attributes$class('noselect')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								elm$html$Html$img,
+								_List_fromArray(
+									[
+										elm$html$Html$Attributes$src(model.homeTeam.logoUrl)
+									]),
+								_List_Nil)
+							]))
+					])),
+				A2(
+				elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								elm$html$Html$div,
+								_List_fromArray(
+									[
+										elm$html$Html$Attributes$align('center')
+									]),
+								_List_fromArray(
+									[
+										elm$html$Html$text(model.awayTeam.fullName)
+									]))
+							])),
+						A2(
+						elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								elm$html$Html$div,
+								_List_fromArray(
+									[
+										elm$html$Html$Attributes$align('center')
+									]),
+								_List_fromArray(
+									[
+										elm$html$Html$text(model.homeTeam.fullName)
+									]))
+							]))
+					])),
+				A2(
+				elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								elm$html$Html$h1,
+								_List_fromArray(
+									[
+										elm$html$Html$Events$onClick(author$project$Main$IncrAwayScore),
+										elm$html$Html$Attributes$class('btn noselect'),
+										elm$html$Html$Attributes$align('center'),
+										elm$html$Html$Attributes$class('scoreboard-text large-font')
+									]),
+								_List_fromArray(
+									[
+										elm$html$Html$text(
+										elm$core$Debug$toString(model.awayScore))
+									]))
+							])),
+						A2(
+						elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								elm$html$Html$h1,
+								_List_fromArray(
+									[
+										elm$html$Html$Events$onClick(author$project$Main$IncrHomeScore),
+										elm$html$Html$Attributes$class('btn noselect'),
+										elm$html$Html$Attributes$align('center'),
+										elm$html$Html$Attributes$class('scoreboard-text large-font'),
+										author$project$Main$gridRow(3),
+										A2(author$project$Main$gridColSpan, 4, 7)
+									]),
+								_List_fromArray(
+									[
+										elm$html$Html$text(
+										elm$core$Debug$toString(model.homeScore))
+									]))
+							]))
+					])),
+				A2(
+				elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								author$project$Main$decrButton,
+								author$project$Main$DecrAwayScore,
+								_List_fromArray(
+									[
+										author$project$Main$gridRow(4),
+										author$project$Main$gridCol(2)
+									]))
+							])),
+						A2(
+						elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								author$project$Main$decrButton,
+								author$project$Main$DecrHomeScore,
+								_List_fromArray(
+									[
+										author$project$Main$gridRow(4),
+										author$project$Main$gridCol(5)
+									]))
+							]))
+					]))
+			]));
+};
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
@@ -5138,119 +5312,7 @@ var author$project$Main$view = function (model) {
 			]),
 		_List_fromArray(
 			[
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Events$onClick(author$project$Main$NextAwayTeam),
-						elm$html$Html$Attributes$class('btn noselect'),
-						elm$html$Html$Attributes$align('center'),
-						author$project$Main$gridRow(1),
-						A2(author$project$Main$gridColSpan, 1, 4)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						elm$html$Html$img,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$src(model.awayTeam.logoUrl),
-								elm$html$Html$Attributes$height(150)
-							]),
-						_List_Nil)
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Events$onClick(author$project$Main$NextHomeTeam),
-						elm$html$Html$Attributes$class('btn noselect'),
-						elm$html$Html$Attributes$align('center'),
-						author$project$Main$gridRow(1),
-						A2(author$project$Main$gridColSpan, 4, 7)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						elm$html$Html$img,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$src(model.homeTeam.logoUrl)
-							]),
-						_List_Nil)
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$align('center'),
-						author$project$Main$gridRow(2),
-						author$project$Main$gridCol(2)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(model.awayTeam.fullName)
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$align('center'),
-						author$project$Main$gridRow(2),
-						author$project$Main$gridCol(5)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(model.homeTeam.fullName)
-					])),
-				A2(
-				elm$html$Html$h1,
-				_List_fromArray(
-					[
-						elm$html$Html$Events$onClick(author$project$Main$IncrAwayScore),
-						elm$html$Html$Attributes$class('btn noselect'),
-						elm$html$Html$Attributes$align('center'),
-						elm$html$Html$Attributes$class('scoreboard-text large-font'),
-						author$project$Main$gridRow(3),
-						A2(author$project$Main$gridColSpan, 1, 4)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$Debug$toString(model.awayScore))
-					])),
-				A2(
-				elm$html$Html$h1,
-				_List_fromArray(
-					[
-						elm$html$Html$Events$onClick(author$project$Main$IncrHomeScore),
-						elm$html$Html$Attributes$class('btn noselect'),
-						elm$html$Html$Attributes$align('center'),
-						elm$html$Html$Attributes$class('scoreboard-text large-font'),
-						author$project$Main$gridRow(3),
-						A2(author$project$Main$gridColSpan, 4, 7)
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$Debug$toString(model.homeScore))
-					])),
-				A2(
-				author$project$Main$decrButton,
-				author$project$Main$DecrAwayScore,
-				_List_fromArray(
-					[
-						author$project$Main$gridRow(4),
-						author$project$Main$gridCol(2)
-					])),
-				A2(
-				author$project$Main$decrButton,
-				author$project$Main$DecrHomeScore,
-				_List_fromArray(
-					[
-						author$project$Main$gridRow(4),
-						author$project$Main$gridCol(5)
-					]))
+				author$project$Main$mainTable(model)
 			]));
 };
 var elm$core$Platform$Cmd$batch = _Platform_batch;
