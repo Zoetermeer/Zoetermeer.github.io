@@ -4484,8 +4484,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 189, column: 19},
-					end: {line: 189, column: 29}
+					start: {line: 187, column: 19},
+					end: {line: 187, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -5093,28 +5093,6 @@ var author$project$Main$decrButton = F2(
 				]));
 	});
 var elm$core$Debug$toString = _Debug_toString;
-var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
-var author$project$Main$gridCol = function (c) {
-	return A2(
-		elm$html$Html$Attributes$style,
-		'grid-column',
-		elm$core$Debug$toString(c));
-};
-var author$project$Main$gridColSpan = F2(
-	function (c1, c2) {
-		return A2(
-			elm$html$Html$Attributes$style,
-			'grid-column',
-			elm$core$Debug$toString(c1) + (' / ' + elm$core$Debug$toString(c2)));
-	});
-var author$project$Main$gridRow = function (r) {
-	return A2(
-		elm$html$Html$Attributes$style,
-		'grid-row',
-		elm$core$Debug$toString(r));
-};
-var elm$html$Html$h1 = _VirtualDom_node('h1');
 var elm$html$Html$img = _VirtualDom_node('img');
 var elm$html$Html$table = _VirtualDom_node('table');
 var elm$html$Html$td = _VirtualDom_node('td');
@@ -5135,7 +5113,10 @@ var elm$html$Html$Attributes$src = function (url) {
 var author$project$Main$mainTable = function (model) {
 	return A2(
 		elm$html$Html$table,
-		_List_Nil,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('scoreboard')
+			]),
 		_List_fromArray(
 			[
 				A2(
@@ -5226,45 +5207,29 @@ var author$project$Main$mainTable = function (model) {
 					[
 						A2(
 						elm$html$Html$td,
-						_List_Nil,
 						_List_fromArray(
 							[
-								A2(
-								elm$html$Html$h1,
-								_List_fromArray(
-									[
-										elm$html$Html$Events$onClick(author$project$Main$IncrAwayScore),
-										elm$html$Html$Attributes$class('btn noselect'),
-										elm$html$Html$Attributes$align('center'),
-										elm$html$Html$Attributes$class('scoreboard-text large-font')
-									]),
-								_List_fromArray(
-									[
-										elm$html$Html$text(
-										elm$core$Debug$toString(model.awayScore))
-									]))
+								elm$html$Html$Events$onClick(author$project$Main$IncrAwayScore),
+								elm$html$Html$Attributes$class('noselect scoreboard-text large-font'),
+								elm$html$Html$Attributes$align('center')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(
+								elm$core$Debug$toString(model.awayScore))
 							])),
 						A2(
 						elm$html$Html$td,
-						_List_Nil,
 						_List_fromArray(
 							[
-								A2(
-								elm$html$Html$h1,
-								_List_fromArray(
-									[
-										elm$html$Html$Events$onClick(author$project$Main$IncrHomeScore),
-										elm$html$Html$Attributes$class('btn noselect'),
-										elm$html$Html$Attributes$align('center'),
-										elm$html$Html$Attributes$class('scoreboard-text large-font'),
-										author$project$Main$gridRow(3),
-										A2(author$project$Main$gridColSpan, 4, 7)
-									]),
-								_List_fromArray(
-									[
-										elm$html$Html$text(
-										elm$core$Debug$toString(model.homeScore))
-									]))
+								elm$html$Html$Events$onClick(author$project$Main$IncrHomeScore),
+								elm$html$Html$Attributes$class('noselect scoreboard-text large-font'),
+								elm$html$Html$Attributes$align('center')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(
+								elm$core$Debug$toString(model.homeScore))
 							]))
 					])),
 				A2(
@@ -5277,28 +5242,14 @@ var author$project$Main$mainTable = function (model) {
 						_List_Nil,
 						_List_fromArray(
 							[
-								A2(
-								author$project$Main$decrButton,
-								author$project$Main$DecrAwayScore,
-								_List_fromArray(
-									[
-										author$project$Main$gridRow(4),
-										author$project$Main$gridCol(2)
-									]))
+								A2(author$project$Main$decrButton, author$project$Main$DecrAwayScore, _List_Nil)
 							])),
 						A2(
 						elm$html$Html$td,
 						_List_Nil,
 						_List_fromArray(
 							[
-								A2(
-								author$project$Main$decrButton,
-								author$project$Main$DecrHomeScore,
-								_List_fromArray(
-									[
-										author$project$Main$gridRow(4),
-										author$project$Main$gridCol(5)
-									]))
+								A2(author$project$Main$decrButton, author$project$Main$DecrHomeScore, _List_Nil)
 							]))
 					]))
 			]));
