@@ -5158,7 +5158,8 @@ var author$project$Main$mainTable = function (model) {
 								elm$html$Html$img,
 								_List_fromArray(
 									[
-										elm$html$Html$Attributes$src(model.homeTeam.logoUrl)
+										elm$html$Html$Attributes$src(model.homeTeam.logoUrl),
+										elm$html$Html$Attributes$height(150)
 									]),
 								_List_Nil)
 							]))

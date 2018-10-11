@@ -127,7 +127,7 @@ mainTable model =
       [ img [ src model.awayTeam.logoUrl, height 150 ] []
       ]
     , td [ align "center", onClick NextHomeTeam, class "noselect" ]
-      [ img [ src model.homeTeam.logoUrl ] []
+      [ img [ src model.homeTeam.logoUrl, height 150 ] []
       ]
     ]
   , tr []
