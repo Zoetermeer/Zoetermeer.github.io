@@ -5117,6 +5117,8 @@ var elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
+var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var author$project$Main$mainTable = function (model) {
 	return A2(
 		elm$html$Html$table,
@@ -5137,7 +5139,8 @@ var author$project$Main$mainTable = function (model) {
 							[
 								elm$html$Html$Attributes$align('center'),
 								elm$html$Html$Events$onClick(author$project$Main$NextAwayTeam),
-								elm$html$Html$Attributes$class('noselect')
+								elm$html$Html$Attributes$class('noselect'),
+								A2(elm$html$Html$Attributes$style, 'width', '50%')
 							]),
 						_List_fromArray(
 							[

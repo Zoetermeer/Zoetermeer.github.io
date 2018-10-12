@@ -129,7 +129,7 @@ mainTable : Model -> Html Msg
 mainTable model =
   table [ class "scoreboard" ]
   [ tr []
-    [ td [ align "center", onClick NextAwayTeam, class "noselect" ]
+    [ td [ align "center", onClick NextAwayTeam, class "noselect", style "width" "50%" ]
       [ img [ src model.awayTeam.logoUrl, height 150 ] []
       ]
     , td [ align "center", onClick NextHomeTeam, class "noselect" ]
