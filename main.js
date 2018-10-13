@@ -4767,9 +4767,7 @@ var author$project$Main$update = F2(
 			case 'DecrAwayScore':
 				return _Utils_update(
 					model,
-					{
-						awayScore: A2(elm$core$Basics$max, 0, model.awayScore - 1)
-					});
+					{awayScore: 0});
 			case 'IncrAwayScore':
 				return _Utils_update(
 					model,
@@ -4777,9 +4775,7 @@ var author$project$Main$update = F2(
 			case 'DecrHomeScore':
 				return _Utils_update(
 					model,
-					{
-						homeScore: A2(elm$core$Basics$max, 0, model.homeScore - 1)
-					});
+					{homeScore: 0});
 			case 'IncrHomeScore':
 				return _Utils_update(
 					model,
@@ -5115,7 +5111,7 @@ var author$project$Main$decrButton = F2(
 				attrs),
 			_List_fromArray(
 				[
-					elm$html$Html$text('SUBTRACT')
+					elm$html$Html$text('RESET')
 				]));
 	});
 var elm$core$Debug$toString = _Debug_toString;
@@ -5206,7 +5202,8 @@ var author$project$Main$mainTable = function (model) {
 								elm$html$Html$div,
 								_List_fromArray(
 									[
-										elm$html$Html$Attributes$align('center')
+										elm$html$Html$Attributes$align('center'),
+										elm$html$Html$Attributes$class('team-label')
 									]),
 								_List_fromArray(
 									[
@@ -5222,7 +5219,8 @@ var author$project$Main$mainTable = function (model) {
 								elm$html$Html$div,
 								_List_fromArray(
 									[
-										elm$html$Html$Attributes$align('center')
+										elm$html$Html$Attributes$align('center'),
+										elm$html$Html$Attributes$class('team-label')
 									]),
 								_List_fromArray(
 									[
@@ -5240,7 +5238,7 @@ var author$project$Main$mainTable = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$Events$onClick(author$project$Main$IncrAwayScore),
-								elm$html$Html$Attributes$class('noselect scoreboard-text large-font'),
+								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font'),
 								elm$html$Html$Attributes$align('center')
 							]),
 						_List_fromArray(
@@ -5253,7 +5251,7 @@ var author$project$Main$mainTable = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$Events$onClick(author$project$Main$IncrHomeScore),
-								elm$html$Html$Attributes$class('noselect scoreboard-text large-font'),
+								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font'),
 								elm$html$Html$Attributes$align('center')
 							]),
 						_List_fromArray(

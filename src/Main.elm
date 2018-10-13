@@ -129,9 +129,9 @@ update msg model =
             let (i, newTeam) = selectTeam model nextIndex .homeTeamIndex
             in
             { model | homeTeam = newTeam, homeTeamIndex = i }
-        DecrAwayScore -> { model | awayScore = max 0 (model.awayScore - 1) }
+        DecrAwayScore -> { model | awayScore = 0 }
         IncrAwayScore -> { model | awayScore = model.awayScore + 1 }
-        DecrHomeScore -> { model | homeScore = max 0 (model.homeScore - 1) }
+        DecrHomeScore -> { model | homeScore = 0 }
         IncrHomeScore -> { model | homeScore = model.homeScore + 1 }
         Decrement ->
             { model | count = model.count - 1 }
@@ -163,16 +163,16 @@ mainTable model =
     ]
   , tr []
     [ td []
-      [ div [ align "center" ] [ text model.awayTeam.fullName ]
+      [ div [ align "center", class "team-label" ] [ text model.awayTeam.fullName ]
       ]
     , td []
-      [ div [ align "center" ] [ text model.homeTeam.fullName ]
+      [ div [ align "center", class "team-label" ] [ text model.homeTeam.fullName ]
       ]
     ]
   , tr []
-    [ td [ onClick IncrAwayScore, class "noselect scoreboard-text large-font", align "center" ]
+    [ td [ onClick IncrAwayScore, class "bordered noselect scoreboard-text large-font", align "center" ]
       [ text (Debug.toString model.awayScore) ]
-    , td [ onClick IncrHomeScore, class "noselect scoreboard-text large-font", align "center" ]
+    , td [ onClick IncrHomeScore, class "bordered noselect scoreboard-text large-font", align "center" ]
       [ text (Debug.toString model.homeScore) ]
     ]
   , tr []
@@ -187,7 +187,7 @@ mainTable model =
 
 
 decrButton : Msg -> List (Attribute Msg) -> Html Msg
-decrButton msg attrs = div ([ class "btn subtract-button noselect", onClick msg ] ++ attrs) [ text "SUBTRACT" ]
+decrButton msg attrs = div ([ class "btn subtract-button noselect", onClick msg ] ++ attrs) [ text "RESET" ]
 
 
 main : Program () Model Msg
