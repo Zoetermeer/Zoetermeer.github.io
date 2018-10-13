@@ -152,6 +152,13 @@ view model =
 
 mainTable : Model -> Html Msg
 mainTable model =
+  let (awayScoreGlow, homeScoreGlow) =
+        if model.awayScore == model.homeScore
+        then ("", "")
+        else if model.awayScore > model.homeScore
+             then ("glow", "")
+             else ("", "glow")
+  in
   table [ class "scoreboard" ]
   [ tr []
     [ td [ align "center", onClick NextAwayTeam, class "noselect", style "width" "50%" ]
@@ -162,17 +169,17 @@ mainTable model =
       ]
     ]
   , tr []
-    [ td []
-      [ div [ align "center", class "team-label" ] [ text model.awayTeam.fullName ]
+    [ td [ class "bordered-dark", style "background" "#ccc" ]
+      [ div [ align "center", class "sunken-text" ] [ text (String.toUpper model.awayTeam.fullName) ]
       ]
-    , td []
-      [ div [ align "center", class "team-label" ] [ text model.homeTeam.fullName ]
+    , td [ class "bordered-dark", style "background" "#ccc" ]
+      [ div [ align "center", class "sunken-text" ] [ text (String.toUpper model.homeTeam.fullName) ]
       ]
     ]
   , tr []
-    [ td [ onClick IncrAwayScore, class "bordered noselect scoreboard-text large-font", align "center" ]
+    [ td [ onClick IncrAwayScore, class ("bordered noselect scoreboard-text large-font " ++ awayScoreGlow), align "center" ]
       [ text (Debug.toString model.awayScore) ]
-    , td [ onClick IncrHomeScore, class "bordered noselect scoreboard-text large-font", align "center" ]
+    , td [ onClick IncrHomeScore, class ("bordered noselect scoreboard-text large-font " ++ homeScoreGlow), align "center" ]
       [ text (Debug.toString model.homeScore) ]
     ]
   , tr []

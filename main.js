@@ -4484,8 +4484,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 219, column: 19},
-					end: {line: 219, column: 29}
+					start: {line: 226, column: 19},
+					end: {line: 226, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -5115,6 +5115,7 @@ var author$project$Main$decrButton = F2(
 				]));
 	});
 var elm$core$Debug$toString = _Debug_toString;
+var elm$core$String$toUpper = _String_toUpper;
 var elm$html$Html$img = _VirtualDom_node('img');
 var elm$html$Html$table = _VirtualDom_node('table');
 var elm$html$Html$td = _VirtualDom_node('td');
@@ -5135,6 +5136,9 @@ var elm$html$Html$Attributes$src = function (url) {
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var author$project$Main$mainTable = function (model) {
+	var _n0 = _Utils_eq(model.awayScore, model.homeScore) ? _Utils_Tuple2('', '') : ((_Utils_cmp(model.awayScore, model.homeScore) > 0) ? _Utils_Tuple2('glow', '') : _Utils_Tuple2('', 'glow'));
+	var awayScoreGlow = _n0.a;
+	var homeScoreGlow = _n0.b;
 	return A2(
 		elm$html$Html$table,
 		_List_fromArray(
@@ -5195,7 +5199,11 @@ var author$project$Main$mainTable = function (model) {
 					[
 						A2(
 						elm$html$Html$td,
-						_List_Nil,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$class('bordered-dark'),
+								A2(elm$html$Html$Attributes$style, 'background', '#ccc')
+							]),
 						_List_fromArray(
 							[
 								A2(
@@ -5203,16 +5211,21 @@ var author$project$Main$mainTable = function (model) {
 								_List_fromArray(
 									[
 										elm$html$Html$Attributes$align('center'),
-										elm$html$Html$Attributes$class('team-label')
+										elm$html$Html$Attributes$class('sunken-text')
 									]),
 								_List_fromArray(
 									[
-										elm$html$Html$text(model.awayTeam.fullName)
+										elm$html$Html$text(
+										elm$core$String$toUpper(model.awayTeam.fullName))
 									]))
 							])),
 						A2(
 						elm$html$Html$td,
-						_List_Nil,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$class('bordered-dark'),
+								A2(elm$html$Html$Attributes$style, 'background', '#ccc')
+							]),
 						_List_fromArray(
 							[
 								A2(
@@ -5220,11 +5233,12 @@ var author$project$Main$mainTable = function (model) {
 								_List_fromArray(
 									[
 										elm$html$Html$Attributes$align('center'),
-										elm$html$Html$Attributes$class('team-label')
+										elm$html$Html$Attributes$class('sunken-text')
 									]),
 								_List_fromArray(
 									[
-										elm$html$Html$text(model.homeTeam.fullName)
+										elm$html$Html$text(
+										elm$core$String$toUpper(model.homeTeam.fullName))
 									]))
 							]))
 					])),
@@ -5238,7 +5252,7 @@ var author$project$Main$mainTable = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$Events$onClick(author$project$Main$IncrAwayScore),
-								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font'),
+								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font ' + awayScoreGlow),
 								elm$html$Html$Attributes$align('center')
 							]),
 						_List_fromArray(
@@ -5251,7 +5265,7 @@ var author$project$Main$mainTable = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$Events$onClick(author$project$Main$IncrHomeScore),
-								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font'),
+								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font ' + homeScoreGlow),
 								elm$html$Html$Attributes$align('center')
 							]),
 						_List_fromArray(

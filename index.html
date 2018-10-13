@@ -7,7 +7,10 @@
     body {
       font-family: 'Open Sans', sans-serif;
       color: White;
-      background-color: #292929;
+      /* background-color: #292929; */
+			/* background: radial-gradient(#fceabb, #f8b500); */
+			background: radial-gradient(Gray, #292929);
+			background-repeat: no-repeat;
     }
 
     .btn {
@@ -25,10 +28,30 @@
     .large-font {
        font-size: 128pt;
     }
+		h1 {
+			font: bold 200px arial, sans-serif;
+			background-color: #565656;
+			color: transparent;
+			text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+			-webkit-background-clip: text;
+				 -moz-background-clip: text;
+							background-clip: text;
+		}
+
+		.sunken-text {
+			font: bold 50px arial, sans-serif;
+			background-color: #565656;
+			color: transparent;
+			text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+			-webkit-background-clip: text;
+				 -moz-background-clip: text;
+							background-clip: text;
+
+		}
 
     .scoreboard-text {
        font-family: 'AvenirNext-Heavy', 'Impact', sans-serif;
-       color: White;
+			 color: White;
     }
 
     .goal-button {
@@ -47,6 +70,26 @@
 
     .bordered {
       border: dotted 2px #cccccc;
+    }
+
+    .bordered-dark {
+      border: dotted 1px Gray;
+    }
+
+		.glow {
+      -webkit-animation-duration: 1s;
+      -webkit-animation-name: glow;
+      -webkit-animation-direction: alternate;
+      -webkit-animation-iteration-count: infinite;
+      animation-duration: 1s;
+      animation-name: glow;
+      animation-direction: alternate;
+      animation-iteration-count: infinite;
+    }
+
+    @-webkit-keyframes glow {
+        from { text-shadow: 0 0 0px white; }
+        to { text-shadow: 0 0 20px white; }
     }
 
     .subtract-button {
