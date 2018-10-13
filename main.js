@@ -4484,8 +4484,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 210, column: 19},
-					end: {line: 210, column: 29}
+					start: {line: 219, column: 19},
+					end: {line: 219, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -4495,20 +4495,29 @@ var author$project$Main$Team = F3(
 	});
 var author$project$Main$nhlTeams = _List_fromArray(
 	[
+		A3(author$project$Main$Team, 'Anaheim Ducks', 'Ducks', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Ducks_Primary.png'),
+		A3(author$project$Main$Team, 'Arizona Coyotes', 'Coyotes', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Coyotes_Primary.png'),
 		A3(author$project$Main$Team, 'Boston Bruins', 'Bruins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Bruins_Primary.png'),
+		A3(author$project$Main$Team, 'Buffalo Sabres', 'Sabres', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sabres_Primary.png'),
+		A3(author$project$Main$Team, 'Calgary Flames', 'Flames', 'http://www.capsinfo.com/images/NHL_Team_Logos/calgary.png'),
 		A3(author$project$Main$Team, 'Carolina Hurricans', 'Hurricanes', 'http://www.capsinfo.com/images/NHL_Team_Logos/carolina.png'),
 		A3(author$project$Main$Team, 'Chicago Blackhawks', 'Blackhawks', 'http://www.capsinfo.com/images/NHL_Team_Logos/chicago.png'),
 		A3(author$project$Main$Team, 'Colorado Avalanche', 'Avalanche', 'http://www.capsinfo.com/images/NHL_Team_Logos/colorado.png'),
 		A3(author$project$Main$Team, 'Dallas Stars', 'Stars', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png'),
 		A3(author$project$Main$Team, 'Detroit Red Wings', 'Red Wings', 'http://www.capsinfo.com/images/NHL_Team_Logos/detroit.png'),
+		A3(author$project$Main$Team, 'Edmonton Oilers', 'Oilers', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Oilers_Primary.png'),
+		A3(author$project$Main$Team, 'Hartford Whalers', 'Whalers', 'https://www.clipartmax.com/png/full/10-101501_whalers-hockey-team-based-on-their-percentage-of-the-nhl-logos-hartford.png'),
 		A3(author$project$Main$Team, 'Los Angeles Kings', 'Kings', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Kings_Primary.png'),
 		A3(author$project$Main$Team, 'Montreal Canadiens', 'Canadiens', 'http://www.capsinfo.com/images/NHL_Team_Logos/montreal.png'),
 		A3(author$project$Main$Team, 'Nashville Predators', 'Predators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Predators_Primary.png'),
+		A3(author$project$Main$Team, 'New York Islanders', 'Islanders', 'http://www.capsinfo.com/images/NHL_Team_Logos/NY-Islanders-Primary.png'),
 		A3(author$project$Main$Team, 'New York Rangers', 'Rangers', 'http://www.capsinfo.com/images/NHL_Team_Logos/newyorkr.png'),
 		A3(author$project$Main$Team, 'Ottawa Senators', 'Senators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Senators_Primary.png'),
 		A3(author$project$Main$Team, 'Philadelphia Flyers', 'Flyers', 'http://www.capsinfo.com/images/NHL_Team_Logos/philadelphia.gif'),
 		A3(author$project$Main$Team, 'Pittsburgh Penguins', 'Penguins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Penguins_Primary.png'),
+		A3(author$project$Main$Team, 'San Jose Sharks', 'Sharks', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sharks_Primary.png'),
 		A3(author$project$Main$Team, 'St. Louis Blues', 'Blues', 'http://www.capsinfo.com/images/NHL_Team_Logos/stlouis.png'),
+		A3(author$project$Main$Team, 'Tampa Bay Lightning', 'Lightning', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Lightning_Primary.png'),
 		A3(author$project$Main$Team, 'Toronto Maple Leafs', 'Maple Leafs', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_MapleLeafs_Primary.png'),
 		A3(author$project$Main$Team, 'Vegas Golden Knights', 'Knights', 'http://www.stickpng.com/assets/images/5a4fbbe1da2b4f099b95da21.png'),
 		A3(author$project$Main$Team, 'Washington Capitals', 'Capitals', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Capitals_Primary.png'),
