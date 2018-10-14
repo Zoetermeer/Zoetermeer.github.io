@@ -4484,8 +4484,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 226, column: 19},
-					end: {line: 226, column: 29}
+					start: {line: 227, column: 19},
+					end: {line: 227, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -4528,6 +4528,7 @@ var author$project$Main$nhlTeams = _List_fromArray(
 		A3(author$project$Main$Team, 'Milwaukee Brewers', 'Brewers', 'http://www.capsinfo.com/images/MLB_Team_Logos/Milwaukee_Brewers.png'),
 		A3(author$project$Main$Team, 'Carolina Panthers', 'Panthers', 'https://www.clipartmax.com/png/full/22-220847_being-a-panthers-fan-pays-off-in-more-ways-than-one-fathead.png'),
 		A3(author$project$Main$Team, 'Dallas Cowboys', 'Cowboys', 'https://www.clipartmax.com/png/full/120-1207993_dallas-cowboys-logo-dallas-cowboys-helmet-logo.png'),
+		A3(author$project$Main$Team, 'Jacksonville Jaguars', 'Jaguars', 'https://www.clipartmax.com/png/full/113-1133772_its-the-day-the-jaguars-along-with-every-other-team-jacksonville-jaguars.png'),
 		A3(author$project$Main$Team, 'Washington Redskins', 'Redskins', 'https://www.clipartmax.com/png/full/216-2169983_redskins-helmet-clip-art-washington-redskins-helmet.png'),
 		A3(author$project$Main$Team, 'FC Barcelona', 'Barcelona', 'https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png'),
 		A3(author$project$Main$Team, 'Arsenal FC', 'Arsenal', 'https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png'),
