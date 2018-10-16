@@ -5,6 +5,7 @@ import Browser
 import Html exposing (Attribute, Html, button, div, h1, img, table, text, td, tr)
 import Html.Attributes exposing (align, class, height, src, style)
 import Html.Events exposing (onClick)
+import Time
 
 type alias Team =
     { fullName : String
@@ -22,14 +23,15 @@ mkTeam fullName nickname logoUrl color1 color2 color3 =
 
 
 type alias Model =
-    { count : Int
-    , teams : Array.Array Team
+    { teams : Array.Array Team
     , awayTeam : Team
     , awayTeamIndex : Int
     , homeTeam : Team
     , homeTeamIndex : Int
     , awayScore : Int
     , homeScore : Int
+    , awayPowerPlayMs : Int
+    , homePowerPlayMs : Int
     }
 
 
@@ -82,21 +84,22 @@ nhlTeams =
     , Team "Rebel Alliance" "Alliance" "https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png"
     ]
 
-initialModel : Model
-initialModel =
+init : () -> (Model, Cmd Msg)
+init _ =
     let teamArray = Array.fromList nhlTeams
         defaultAway = forceGet teamArray 0
         defaultHome = forceGet teamArray 1
-    in
-    { count = 0
-    , teams = teamArray
-    , awayTeam = defaultAway
-    , awayTeamIndex = 0
-    , homeTeam = defaultHome
-    , homeTeamIndex = 1
-    , awayScore = 0
-    , homeScore = 0
-    }
+        mtModel = { teams = teamArray
+                  , awayTeam = defaultAway
+                  , awayTeamIndex = 0
+                  , homeTeam = defaultHome
+                  , homeTeamIndex = 1
+                  , awayScore = 0
+                  , homeScore = 0
+                  , awayPowerPlayMs = 0
+                  , homePowerPlayMs = 0
+                  }
+    in (mtModel, Cmd.none)
 
 
 type Msg
@@ -105,37 +108,77 @@ type Msg
     | NextHomeTeam
     | PrevHomeTeam
     | IncrAwayScore
-    | DecrAwayScore
+    | ResetAway
     | IncrHomeScore
-    | DecrHomeScore
-    | Decrement
+    | ResetHome
+    | StartAwayPowerPlay
+    | StopAwayPowerPlay
+    | StartHomePowerPlay
+    | StopHomePowerPlay
+    | Tick Time.Posix
 
 
-update : Msg -> Model -> Model
+powerPlayDurationMs : Int
+powerPlayDurationMs = 2 * 60 * 1000
+
+
+tickInterval : Float
+tickInterval = 10
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ = Time.every tickInterval Tick
+  
+
+
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
+        Tick tm ->
+            let awayPPMs = max 0 (model.awayPowerPlayMs - round tickInterval)
+                homePPMs = max 0 (model.homePowerPlayMs - round tickInterval)
+            in ({ model | awayPowerPlayMs = awayPPMs, homePowerPlayMs = homePPMs }, Cmd.none)
         PrevAwayTeam ->
             let (i, newTeam) = selectTeam model prevIndex .awayTeamIndex
             in
-            { model | awayTeam = newTeam, awayTeamIndex = i }
+            ({ model | awayTeam = newTeam, awayTeamIndex = i }, Cmd.none)
         NextAwayTeam ->
             let (i, newTeam) = selectTeam model nextIndex .awayTeamIndex
             in
-            { model | awayTeam = newTeam, awayTeamIndex = i }
+            ({ model | awayTeam = newTeam, awayTeamIndex = i }, Cmd.none)
         PrevHomeTeam ->
             let (i, newTeam) = selectTeam model prevIndex .homeTeamIndex
             in
-            { model | homeTeam = newTeam, homeTeamIndex = i }
+            ({ model | homeTeam = newTeam, homeTeamIndex = i }, Cmd.none)
         NextHomeTeam ->
             let (i, newTeam) = selectTeam model nextIndex .homeTeamIndex
             in
-            { model | homeTeam = newTeam, homeTeamIndex = i }
-        DecrAwayScore -> { model | awayScore = 0 }
-        IncrAwayScore -> { model | awayScore = model.awayScore + 1 }
-        DecrHomeScore -> { model | homeScore = 0 }
-        IncrHomeScore -> { model | homeScore = model.homeScore + 1 }
-        Decrement ->
-            { model | count = model.count - 1 }
+            ({ model | homeTeam = newTeam, homeTeamIndex = i }, Cmd.none)
+        ResetAway -> ({ model | awayScore = 0, awayPowerPlayMs = 0 }, Cmd.none)
+        IncrAwayScore -> ({ model | awayScore = model.awayScore + 1 }, Cmd.none)
+        ResetHome -> ({ model | homeScore = 0, homePowerPlayMs = 0 }, Cmd.none)
+        IncrHomeScore -> ({ model | homeScore = model.homeScore + 1 }, Cmd.none)
+        StartAwayPowerPlay ->
+          ({ model | awayPowerPlayMs = powerPlayDurationMs }, Cmd.none)
+        StopAwayPowerPlay ->
+          ({ model | awayPowerPlayMs = 0 }, Cmd.none)
+        StartHomePowerPlay ->
+          ({ model | homePowerPlayMs = powerPlayDurationMs }, Cmd.none)
+        StopHomePowerPlay ->
+          ({ model | homePowerPlayMs = 0 }, Cmd.none)
+
+
+padNum : Int -> String
+padNum n =
+  if n < 10 then "0" ++ Debug.toString n else Debug.toString n
+
+
+toDurationStr : Int -> String
+toDurationStr ms =
+  let min = ms // 1000 // 60
+      sec = remainderBy 60000 ms // 1000
+      hms = remainderBy 1000 ms // 10
+  in padNum min ++ ":" ++ padNum sec ++ "." ++ padNum hms
 
 
 selectTeam : Model -> (Array.Array Team -> Int -> Int) -> (Model -> Int) -> (Int, Team)
@@ -159,6 +202,8 @@ mainTable model =
         else if model.awayScore > model.homeScore
              then ("glow", "")
              else ("", "glow")
+      awayPPMsg = if model.awayPowerPlayMs == 0 then StartAwayPowerPlay else StopAwayPowerPlay
+      homePPMsg = if model.homePowerPlayMs == 0 then StartHomePowerPlay else StopHomePowerPlay
   in
   table [ class "scoreboard" ]
   [ tr []
@@ -184,14 +229,35 @@ mainTable model =
       [ text (Debug.toString model.homeScore) ]
     ]
   , tr []
+    [ td [ class "noselect", style "background" "#ccc" ]
+      [ powerPlayButton model.awayPowerPlayMs awayPPMsg ]
+    , td [ class "noselect" ]
+      [ div [ align "center", class "sunken-text", onClick homePPMsg ]
+        [ text (toDurationStr model.homePowerPlayMs) ]
+      ]
+    ]
+  , tr []
     [ td []
-      [ decrButton DecrAwayScore [ ]
+      [ decrButton ResetAway [ ]
       ]
     , td []
-      [ decrButton DecrHomeScore [ ]
+      [ decrButton ResetHome [ ]
       ]
     ]
   ]
+
+
+powerPlayButton : Int -> Msg -> Html Msg
+powerPlayButton msLeft msg =
+  if msLeft > 0
+  then 
+    div [ align "center", class "blue-bg big-white-text", onClick msg ]
+        [ text ("POWER PLAY " ++ (toDurationStr msLeft)) ]
+  else
+    div [ align "center", class "sunken-text", onClick msg ]
+        [ text "POWER PLAY" ]
+
+  
 
 
 decrButton : Msg -> List (Attribute Msg) -> Html Msg
@@ -200,10 +266,11 @@ decrButton msg attrs = div ([ class "btn subtract-button noselect", onClick msg 
 
 main : Program () Model Msg
 main =
-    Browser.sandbox
-        { init = initialModel
+    Browser.element
+        { init = init
         , view = view
         , update = update
+        , subscriptions = subscriptions
         }
 
 
