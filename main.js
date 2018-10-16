@@ -4576,8 +4576,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 297, column: 19},
-					end: {line: 297, column: 29}
+					start: {line: 301, column: 19},
+					end: {line: 301, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -5591,56 +5591,60 @@ var author$project$Main$update = F2(
 					A3(author$project$Main$updateTeam, tp, model, author$project$Main$nextIndex));
 			case 'Reset':
 				var tp = msg.a;
-				if (tp.$ === 'Home') {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{homePowerPlayMs: 0, homeScore: 0}));
-				} else {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{awayPowerPlayMs: 0, awayScore: 0}));
-				}
+				return author$project$Main$withNoCmd(
+					function () {
+						if (tp.$ === 'Home') {
+							return _Utils_update(
+								model,
+								{homePowerPlayMs: 0, homeScore: 0});
+						} else {
+							return _Utils_update(
+								model,
+								{awayPowerPlayMs: 0, awayScore: 0});
+						}
+					}());
 			case 'IncrScore':
 				var tp = msg.a;
-				if (tp.$ === 'Home') {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{homeScore: model.homeScore + 1}));
-				} else {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{awayScore: model.awayScore + 1}));
-				}
+				return author$project$Main$withNoCmd(
+					function () {
+						if (tp.$ === 'Home') {
+							return _Utils_update(
+								model,
+								{homeScore: model.homeScore + 1});
+						} else {
+							return _Utils_update(
+								model,
+								{awayScore: model.awayScore + 1});
+						}
+					}());
 			case 'StartPowerPlay':
 				var tp = msg.a;
-				if (tp.$ === 'Home') {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{homePowerPlayMs: author$project$Main$powerPlayDurationMs}));
-				} else {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{awayPowerPlayMs: author$project$Main$powerPlayDurationMs}));
-				}
+				return author$project$Main$withNoCmd(
+					function () {
+						if (tp.$ === 'Home') {
+							return _Utils_update(
+								model,
+								{homePowerPlayMs: author$project$Main$powerPlayDurationMs});
+						} else {
+							return _Utils_update(
+								model,
+								{awayPowerPlayMs: author$project$Main$powerPlayDurationMs});
+						}
+					}());
 			default:
 				var tp = msg.a;
-				if (tp.$ === 'Home') {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{homePowerPlayMs: 0}));
-				} else {
-					return author$project$Main$withNoCmd(
-						_Utils_update(
-							model,
-							{awayPowerPlayMs: 0}));
-				}
+				return author$project$Main$withNoCmd(
+					function () {
+						if (tp.$ === 'Home') {
+							return _Utils_update(
+								model,
+								{homePowerPlayMs: 0});
+						} else {
+							return _Utils_update(
+								model,
+								{awayPowerPlayMs: 0});
+						}
+					}());
 		}
 	});
 var author$project$Main$Away = {$: 'Away'};

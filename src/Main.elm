@@ -166,29 +166,33 @@ update msg model =
         NextTeam tp ->
           updateTeam tp model nextIndex |> withNoCmd
         Reset tp ->
+          withNoCmd <|
           case tp of
             Home ->
-              { model | homeScore = 0, homePowerPlayMs = 0 } |> withNoCmd
+              { model | homeScore = 0, homePowerPlayMs = 0 }
             Away ->
-              { model | awayScore = 0, awayPowerPlayMs = 0 } |> withNoCmd
+              { model | awayScore = 0, awayPowerPlayMs = 0 }
         IncrScore tp ->
+          withNoCmd <|
           case tp of
             Home ->
-              { model | homeScore = model.homeScore + 1 } |> withNoCmd
+              { model | homeScore = model.homeScore + 1 }
             Away ->
-              { model | awayScore = model.awayScore + 1 } |> withNoCmd
+              { model | awayScore = model.awayScore + 1 }
         StartPowerPlay tp ->
+          withNoCmd <|
           case tp of
             Home ->
-              { model | homePowerPlayMs = powerPlayDurationMs } |> withNoCmd
+              { model | homePowerPlayMs = powerPlayDurationMs }
             Away ->
-              { model | awayPowerPlayMs = powerPlayDurationMs } |> withNoCmd
+              { model | awayPowerPlayMs = powerPlayDurationMs }
         StopPowerPlay tp ->
+          withNoCmd <|
           case tp of
             Home ->
-              { model | homePowerPlayMs = 0 } |> withNoCmd
+              { model | homePowerPlayMs = 0 }
             Away ->
-              { model | awayPowerPlayMs = 0 } |> withNoCmd
+              { model | awayPowerPlayMs = 0 }
 
 
 padNum : Int -> String
