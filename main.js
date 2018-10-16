@@ -4530,8 +4530,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 294, column: 19},
-					end: {line: 294, column: 29}
+					start: {line: 290, column: 19},
+					end: {line: 290, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -5959,19 +5959,7 @@ var author$project$Main$mainTable = function (model) {
 							]),
 						_List_fromArray(
 							[
-								A2(
-								elm$html$Html$div,
-								_List_fromArray(
-									[
-										elm$html$Html$Attributes$align('center'),
-										elm$html$Html$Attributes$class('sunken-text'),
-										elm$html$Html$Events$onClick(homePPMsg)
-									]),
-								_List_fromArray(
-									[
-										elm$html$Html$text(
-										author$project$Main$toDurationStr(model.homePowerPlayMs))
-									]))
+								A2(author$project$Main$powerPlayButton, model.homePowerPlayMs, homePPMsg)
 							]))
 					])),
 				A2(
