@@ -232,9 +232,7 @@ mainTable model =
     [ td [ class "noselect", style "background" "#ccc" ]
       [ powerPlayButton model.awayPowerPlayMs awayPPMsg ]
     , td [ class "noselect" ]
-      [ div [ align "center", class "sunken-text", onClick homePPMsg ]
-        [ text (toDurationStr model.homePowerPlayMs) ]
-      ]
+      [ powerPlayButton model.homePowerPlayMs homePPMsg ]
     ]
   , tr []
     [ td []
@@ -256,8 +254,6 @@ powerPlayButton msLeft msg =
   else
     div [ align "center", class "sunken-text", onClick msg ]
         [ text "POWER PLAY" ]
-
-  
 
 
 decrButton : Msg -> List (Attribute Msg) -> Html Msg
