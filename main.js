@@ -5955,7 +5955,8 @@ var author$project$Main$mainTable = function (model) {
 						elm$html$Html$td,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('noselect')
+								elm$html$Html$Attributes$class('noselect'),
+								A2(elm$html$Html$Attributes$style, 'background', '#ccc')
 							]),
 						_List_fromArray(
 							[

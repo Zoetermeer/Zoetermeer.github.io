@@ -231,7 +231,7 @@ mainTable model =
   , tr []
     [ td [ class "noselect", style "background" "#ccc" ]
       [ powerPlayButton model.awayPowerPlayMs awayPPMsg ]
-    , td [ class "noselect" ]
+    , td [ class "noselect", style "background" "#ccc" ]
       [ powerPlayButton model.homePowerPlayMs homePPMsg ]
     ]
   , tr []
