@@ -35,14 +35,14 @@ type alias Model =
     }
 
 
-nhlTeams : List Team
-nhlTeams =
+allTeams : List Team
+allTeams =
     [ Team "Anaheim Ducks" "Ducks" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Ducks_Primary.png"
     , Team "Arizona Coyotes" "Coyotes" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Coyotes_Primary.png"
     , Team "Boston Bruins" "Bruins" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Bruins_Primary.png"
     , Team "Buffalo Sabres" "Sabres" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sabres_Primary.png"
     , Team "Calgary Flames" "Flames" "http://www.capsinfo.com/images/NHL_Team_Logos/calgary.png"
-    , Team "Carolina Hurricans" "Hurricanes" "http://www.capsinfo.com/images/NHL_Team_Logos/carolina.png"
+    , Team "Carolina Hurricanes" "Hurricanes" "http://www.capsinfo.com/images/NHL_Team_Logos/carolina.png"
     , Team "Chicago Blackhawks" "Blackhawks" "http://www.capsinfo.com/images/NHL_Team_Logos/chicago.png"
     , Team "Colorado Avalanche" "Avalanche" "http://www.capsinfo.com/images/NHL_Team_Logos/colorado.png"
     , Team "Dallas Stars" "Stars" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png"
@@ -84,9 +84,20 @@ nhlTeams =
     , Team "Rebel Alliance" "Alliance" "https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png"
     ]
 
+
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
+
+
 init : () -> (Model, Cmd Msg)
 init _ =
-    let teamArray = Array.fromList nhlTeams
+    let teamArray = Array.fromList allTeams
         defaultAway = forceGet teamArray 0
         defaultHome = forceGet teamArray 1
         mtModel = { teams = teamArray
@@ -102,20 +113,17 @@ init _ =
     in (mtModel, Cmd.none)
 
 
+type TeamType = Home | Away
+
+
 type Msg
-    = NextAwayTeam
-    | PrevAwayTeam
-    | NextHomeTeam
-    | PrevHomeTeam
-    | IncrAwayScore
-    | ResetAway
-    | IncrHomeScore
-    | ResetHome
-    | StartAwayPowerPlay
-    | StopAwayPowerPlay
-    | StartHomePowerPlay
-    | StopHomePowerPlay
-    | Tick Time.Posix
+  = NextTeam TeamType
+  | PrevTeam TeamType
+  | IncrScore TeamType
+  | Reset TeamType
+  | StartPowerPlay TeamType
+  | StopPowerPlay TeamType
+  | Tick Time.Posix
 
 
 powerPlayDurationMs : Int
@@ -128,8 +136,23 @@ tickInterval = 10
 
 subscriptions : Model -> Sub Msg
 subscriptions _ = Time.every tickInterval Tick
-  
 
+
+withNoCmd : Model -> (Model, Cmd Msg)
+withNoCmd model = (model, Cmd.none)
+
+
+updateTeam : TeamType -> Model -> (Array.Array Team -> Int -> Int) -> Model
+updateTeam tp model getNewIndex =
+  let getCurIndex = if tp == Home then .homeTeamIndex else .awayTeamIndex
+      (i, newTeam) = selectTeam model getNewIndex getCurIndex
+  in
+  case tp of
+    Home ->
+      { model | homeTeam = newTeam, homeTeamIndex = i }
+    Away ->
+      { model | awayTeam = newTeam, awayTeamIndex = i }
+  
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -138,34 +161,34 @@ update msg model =
             let awayPPMs = max 0 (model.awayPowerPlayMs - round tickInterval)
                 homePPMs = max 0 (model.homePowerPlayMs - round tickInterval)
             in ({ model | awayPowerPlayMs = awayPPMs, homePowerPlayMs = homePPMs }, Cmd.none)
-        PrevAwayTeam ->
-            let (i, newTeam) = selectTeam model prevIndex .awayTeamIndex
-            in
-            ({ model | awayTeam = newTeam, awayTeamIndex = i }, Cmd.none)
-        NextAwayTeam ->
-            let (i, newTeam) = selectTeam model nextIndex .awayTeamIndex
-            in
-            ({ model | awayTeam = newTeam, awayTeamIndex = i }, Cmd.none)
-        PrevHomeTeam ->
-            let (i, newTeam) = selectTeam model prevIndex .homeTeamIndex
-            in
-            ({ model | homeTeam = newTeam, homeTeamIndex = i }, Cmd.none)
-        NextHomeTeam ->
-            let (i, newTeam) = selectTeam model nextIndex .homeTeamIndex
-            in
-            ({ model | homeTeam = newTeam, homeTeamIndex = i }, Cmd.none)
-        ResetAway -> ({ model | awayScore = 0, awayPowerPlayMs = 0 }, Cmd.none)
-        IncrAwayScore -> ({ model | awayScore = model.awayScore + 1 }, Cmd.none)
-        ResetHome -> ({ model | homeScore = 0, homePowerPlayMs = 0 }, Cmd.none)
-        IncrHomeScore -> ({ model | homeScore = model.homeScore + 1 }, Cmd.none)
-        StartAwayPowerPlay ->
-          ({ model | awayPowerPlayMs = powerPlayDurationMs }, Cmd.none)
-        StopAwayPowerPlay ->
-          ({ model | awayPowerPlayMs = 0 }, Cmd.none)
-        StartHomePowerPlay ->
-          ({ model | homePowerPlayMs = powerPlayDurationMs }, Cmd.none)
-        StopHomePowerPlay ->
-          ({ model | homePowerPlayMs = 0 }, Cmd.none)
+        PrevTeam tp ->
+          updateTeam tp model prevIndex |> withNoCmd
+        NextTeam tp ->
+          updateTeam tp model nextIndex |> withNoCmd
+        Reset tp ->
+          case tp of
+            Home ->
+              { model | homeScore = 0, homePowerPlayMs = 0 } |> withNoCmd
+            Away ->
+              { model | awayScore = 0, awayPowerPlayMs = 0 } |> withNoCmd
+        IncrScore tp ->
+          case tp of
+            Home ->
+              { model | homeScore = model.homeScore + 1 } |> withNoCmd
+            Away ->
+              { model | awayScore = model.awayScore + 1 } |> withNoCmd
+        StartPowerPlay tp ->
+          case tp of
+            Home ->
+              { model | homePowerPlayMs = powerPlayDurationMs } |> withNoCmd
+            Away ->
+              { model | awayPowerPlayMs = powerPlayDurationMs } |> withNoCmd
+        StopPowerPlay tp ->
+          case tp of
+            Home ->
+              { model | homePowerPlayMs = 0 } |> withNoCmd
+            Away ->
+              { model | awayPowerPlayMs = 0 } |> withNoCmd
 
 
 padNum : Int -> String
@@ -202,30 +225,30 @@ mainTable model =
         else if model.awayScore > model.homeScore
              then ("glow", "")
              else ("", "glow")
-      awayPPMsg = if model.awayPowerPlayMs == 0 then StartAwayPowerPlay else StopAwayPowerPlay
-      homePPMsg = if model.homePowerPlayMs == 0 then StartHomePowerPlay else StopHomePowerPlay
+      isAwayPP = model.awayPowerPlayMs > 0
+      isHomePP = model.homePowerPlayMs > 0
+      awayPPMsg = if isAwayPP then (StopPowerPlay Away) else (StartPowerPlay Away)
+      homePPMsg = if isHomePP then (StopPowerPlay Home) else (StartPowerPlay Home)
   in
   table [ class "scoreboard" ]
   [ tr []
-    [ td [ align "center", onClick NextAwayTeam, class "noselect", style "width" "50%" ]
+    [ td [ align "center", onClick (NextTeam Away), class "noselect", style "width" "50%" ]
       [ img [ src model.awayTeam.logoUrl, height 150 ] []
       ]
-    , td [ align "center", onClick NextHomeTeam, class "noselect" ]
+    , td [ align "center", onClick (NextTeam Home), class "noselect" ]
       [ img [ src model.homeTeam.logoUrl, height 150 ] []
       ]
     ]
   , tr []
     [ td [ class "bordered-dark", style "background" "#ccc" ]
-      [ div [ align "center", class "sunken-text" ] [ text (String.toUpper model.awayTeam.fullName) ]
-      ]
+      [ teamNameDiv isAwayPP model.awayTeam.fullName ]
     , td [ class "bordered-dark", style "background" "#ccc" ]
-      [ div [ align "center", class "sunken-text" ] [ text (String.toUpper model.homeTeam.fullName) ]
-      ]
+      [ teamNameDiv isHomePP model.homeTeam.fullName ]
     ]
   , tr []
-    [ td [ onClick IncrAwayScore, class ("bordered noselect scoreboard-text large-font " ++ awayScoreGlow), align "center" ]
+    [ td [ onClick (IncrScore Away), class ("bordered noselect scoreboard-text large-font " ++ awayScoreGlow), align "center" ]
       [ text (Debug.toString model.awayScore) ]
-    , td [ onClick IncrHomeScore, class ("bordered noselect scoreboard-text large-font " ++ homeScoreGlow), align "center" ]
+    , td [ onClick (IncrScore Home), class ("bordered noselect scoreboard-text large-font " ++ homeScoreGlow), align "center" ]
       [ text (Debug.toString model.homeScore) ]
     ]
   , tr []
@@ -236,50 +259,34 @@ mainTable model =
     ]
   , tr []
     [ td []
-      [ decrButton ResetAway [ ]
+      [ decrButton (Reset Away) [ ]
       ]
     , td []
-      [ decrButton ResetHome [ ]
+      [ decrButton (Reset Home) [ ]
       ]
     ]
   ]
+
+
+teamNameDiv : Bool -> String -> Html Msg
+teamNameDiv isPP name =
+  let cls = if isPP then "blue-bg big-white-text" else "sunken-text" in
+  div [ align "center", class cls ] [ text (String.toUpper name) ]
 
 
 powerPlayButton : Int -> Msg -> Html Msg
 powerPlayButton msLeft msg =
   if msLeft > 0
   then 
-    div [ align "center", class "blue-bg big-white-text", onClick msg ]
+    div [ align "center", class "pp-button blue-bg big-white-text", onClick msg ]
         [ text ("POWER PLAY " ++ (toDurationStr msLeft)) ]
   else
-    div [ align "center", class "sunken-text", onClick msg ]
+    div [ align "center", class "pp-button sunken-text", onClick msg ]
         [ text "POWER PLAY" ]
 
 
 decrButton : Msg -> List (Attribute Msg) -> Html Msg
 decrButton msg attrs = div ([ class "btn subtract-button noselect", onClick msg ] ++ attrs) [ text "RESET" ]
-
-
-main : Program () Model Msg
-main =
-    Browser.element
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
-
-
-gridRow : Int -> Attribute Msg
-gridRow r = style "grid-row" (Debug.toString r)
-
-
-gridCol : Int -> Attribute Msg
-gridCol c = style "grid-column" (Debug.toString c)
-
-
-gridColSpan : Int -> Int -> Attribute Msg
-gridColSpan c1 c2 = style "grid-column" (Debug.toString c1 ++ " / " ++ Debug.toString c2)
 
 
 forceGet : Array.Array a -> Int -> a

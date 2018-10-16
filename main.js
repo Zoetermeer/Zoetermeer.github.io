@@ -80,271 +80,6 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
 console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.0/optimize for better performance and smaller assets.');
 
 
-var _List_Nil_UNUSED = { $: 0 };
-var _List_Nil = { $: '[]' };
-
-function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
-function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
-
-
-var _List_cons = F2(_List_Cons);
-
-function _List_fromArray(arr)
-{
-	var out = _List_Nil;
-	for (var i = arr.length; i--; )
-	{
-		out = _List_Cons(arr[i], out);
-	}
-	return out;
-}
-
-function _List_toArray(xs)
-{
-	for (var out = []; xs.b; xs = xs.b) // WHILE_CONS
-	{
-		out.push(xs.a);
-	}
-	return out;
-}
-
-var _List_map2 = F3(function(f, xs, ys)
-{
-	for (var arr = []; xs.b && ys.b; xs = xs.b, ys = ys.b) // WHILE_CONSES
-	{
-		arr.push(A2(f, xs.a, ys.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map3 = F4(function(f, xs, ys, zs)
-{
-	for (var arr = []; xs.b && ys.b && zs.b; xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A3(f, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map4 = F5(function(f, ws, xs, ys, zs)
-{
-	for (var arr = []; ws.b && xs.b && ys.b && zs.b; ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A4(f, ws.a, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map5 = F6(function(f, vs, ws, xs, ys, zs)
-{
-	for (var arr = []; vs.b && ws.b && xs.b && ys.b && zs.b; vs = vs.b, ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A5(f, vs.a, ws.a, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_sortBy = F2(function(f, xs)
-{
-	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
-		return _Utils_cmp(f(a), f(b));
-	}));
-});
-
-var _List_sortWith = F2(function(f, xs)
-{
-	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
-		var ord = A2(f, a, b);
-		return ord === elm$core$Basics$EQ ? 0 : ord === elm$core$Basics$LT ? -1 : 1;
-	}));
-});
-
-
-
-// EQUALITY
-
-function _Utils_eq(x, y)
-{
-	for (
-		var pair, stack = [], isEqual = _Utils_eqHelp(x, y, 0, stack);
-		isEqual && (pair = stack.pop());
-		isEqual = _Utils_eqHelp(pair.a, pair.b, 0, stack)
-		)
-	{}
-
-	return isEqual;
-}
-
-function _Utils_eqHelp(x, y, depth, stack)
-{
-	if (depth > 100)
-	{
-		stack.push(_Utils_Tuple2(x,y));
-		return true;
-	}
-
-	if (x === y)
-	{
-		return true;
-	}
-
-	if (typeof x !== 'object' || x === null || y === null)
-	{
-		typeof x === 'function' && _Debug_crash(5);
-		return false;
-	}
-
-	/**/
-	if (x.$ === 'Set_elm_builtin')
-	{
-		x = elm$core$Set$toList(x);
-		y = elm$core$Set$toList(y);
-	}
-	if (x.$ === 'RBNode_elm_builtin' || x.$ === 'RBEmpty_elm_builtin')
-	{
-		x = elm$core$Dict$toList(x);
-		y = elm$core$Dict$toList(y);
-	}
-	//*/
-
-	/**_UNUSED/
-	if (x.$ < 0)
-	{
-		x = elm$core$Dict$toList(x);
-		y = elm$core$Dict$toList(y);
-	}
-	//*/
-
-	for (var key in x)
-	{
-		if (!_Utils_eqHelp(x[key], y[key], depth + 1, stack))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-var _Utils_equal = F2(_Utils_eq);
-var _Utils_notEqual = F2(function(a, b) { return !_Utils_eq(a,b); });
-
-
-
-// COMPARISONS
-
-// Code in Generate/JavaScript.hs, Basics.js, and List.js depends on
-// the particular integer values assigned to LT, EQ, and GT.
-
-function _Utils_cmp(x, y, ord)
-{
-	if (typeof x !== 'object')
-	{
-		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
-	}
-
-	/**/
-	if (x instanceof String)
-	{
-		var a = x.valueOf();
-		var b = y.valueOf();
-		return a === b ? 0 : a < b ? -1 : 1;
-	}
-	//*/
-
-	/**_UNUSED/
-	if (!x.$)
-	//*/
-	/**/
-	if (x.$[0] === '#')
-	//*/
-	{
-		return (ord = _Utils_cmp(x.a, y.a))
-			? ord
-			: (ord = _Utils_cmp(x.b, y.b))
-				? ord
-				: _Utils_cmp(x.c, y.c);
-	}
-
-	// traverse conses until end of a list or a mismatch
-	for (; x.b && y.b && !(ord = _Utils_cmp(x.a, y.a)); x = x.b, y = y.b) {} // WHILE_CONSES
-	return ord || (x.b ? /*GT*/ 1 : y.b ? /*LT*/ -1 : /*EQ*/ 0);
-}
-
-var _Utils_lt = F2(function(a, b) { return _Utils_cmp(a, b) < 0; });
-var _Utils_le = F2(function(a, b) { return _Utils_cmp(a, b) < 1; });
-var _Utils_gt = F2(function(a, b) { return _Utils_cmp(a, b) > 0; });
-var _Utils_ge = F2(function(a, b) { return _Utils_cmp(a, b) >= 0; });
-
-var _Utils_compare = F2(function(x, y)
-{
-	var n = _Utils_cmp(x, y);
-	return n < 0 ? elm$core$Basics$LT : n ? elm$core$Basics$GT : elm$core$Basics$EQ;
-});
-
-
-// COMMON VALUES
-
-var _Utils_Tuple0_UNUSED = 0;
-var _Utils_Tuple0 = { $: '#0' };
-
-function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
-function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
-
-function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
-function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
-
-function _Utils_chr_UNUSED(c) { return c; }
-function _Utils_chr(c) { return new String(c); }
-
-
-// RECORDS
-
-function _Utils_update(oldRecord, updatedFields)
-{
-	var newRecord = {};
-
-	for (var key in oldRecord)
-	{
-		newRecord[key] = oldRecord[key];
-	}
-
-	for (var key in updatedFields)
-	{
-		newRecord[key] = updatedFields[key];
-	}
-
-	return newRecord;
-}
-
-
-// APPEND
-
-var _Utils_append = F2(_Utils_ap);
-
-function _Utils_ap(xs, ys)
-{
-	// append Strings
-	if (typeof xs === 'string')
-	{
-		return xs + ys;
-	}
-
-	// append Lists
-	if (!xs.b)
-	{
-		return ys;
-	}
-	var root = _List_Cons(xs.a, ys);
-	xs = xs.b
-	for (var curr = root; xs.b; xs = xs.b) // WHILE_CONS
-	{
-		curr = curr.b = _List_Cons(xs.a, ys);
-	}
-	return root;
-}
-
-
-
 var _JsArray_empty = [];
 
 function _JsArray_singleton(value)
@@ -776,6 +511,271 @@ function _Debug_regionToString(region)
 	}
 	return 'on lines ' + region.start.line + ' through ' + region.end.line;
 }
+
+
+
+// EQUALITY
+
+function _Utils_eq(x, y)
+{
+	for (
+		var pair, stack = [], isEqual = _Utils_eqHelp(x, y, 0, stack);
+		isEqual && (pair = stack.pop());
+		isEqual = _Utils_eqHelp(pair.a, pair.b, 0, stack)
+		)
+	{}
+
+	return isEqual;
+}
+
+function _Utils_eqHelp(x, y, depth, stack)
+{
+	if (depth > 100)
+	{
+		stack.push(_Utils_Tuple2(x,y));
+		return true;
+	}
+
+	if (x === y)
+	{
+		return true;
+	}
+
+	if (typeof x !== 'object' || x === null || y === null)
+	{
+		typeof x === 'function' && _Debug_crash(5);
+		return false;
+	}
+
+	/**/
+	if (x.$ === 'Set_elm_builtin')
+	{
+		x = elm$core$Set$toList(x);
+		y = elm$core$Set$toList(y);
+	}
+	if (x.$ === 'RBNode_elm_builtin' || x.$ === 'RBEmpty_elm_builtin')
+	{
+		x = elm$core$Dict$toList(x);
+		y = elm$core$Dict$toList(y);
+	}
+	//*/
+
+	/**_UNUSED/
+	if (x.$ < 0)
+	{
+		x = elm$core$Dict$toList(x);
+		y = elm$core$Dict$toList(y);
+	}
+	//*/
+
+	for (var key in x)
+	{
+		if (!_Utils_eqHelp(x[key], y[key], depth + 1, stack))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+var _Utils_equal = F2(_Utils_eq);
+var _Utils_notEqual = F2(function(a, b) { return !_Utils_eq(a,b); });
+
+
+
+// COMPARISONS
+
+// Code in Generate/JavaScript.hs, Basics.js, and List.js depends on
+// the particular integer values assigned to LT, EQ, and GT.
+
+function _Utils_cmp(x, y, ord)
+{
+	if (typeof x !== 'object')
+	{
+		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
+	}
+
+	/**/
+	if (x instanceof String)
+	{
+		var a = x.valueOf();
+		var b = y.valueOf();
+		return a === b ? 0 : a < b ? -1 : 1;
+	}
+	//*/
+
+	/**_UNUSED/
+	if (!x.$)
+	//*/
+	/**/
+	if (x.$[0] === '#')
+	//*/
+	{
+		return (ord = _Utils_cmp(x.a, y.a))
+			? ord
+			: (ord = _Utils_cmp(x.b, y.b))
+				? ord
+				: _Utils_cmp(x.c, y.c);
+	}
+
+	// traverse conses until end of a list or a mismatch
+	for (; x.b && y.b && !(ord = _Utils_cmp(x.a, y.a)); x = x.b, y = y.b) {} // WHILE_CONSES
+	return ord || (x.b ? /*GT*/ 1 : y.b ? /*LT*/ -1 : /*EQ*/ 0);
+}
+
+var _Utils_lt = F2(function(a, b) { return _Utils_cmp(a, b) < 0; });
+var _Utils_le = F2(function(a, b) { return _Utils_cmp(a, b) < 1; });
+var _Utils_gt = F2(function(a, b) { return _Utils_cmp(a, b) > 0; });
+var _Utils_ge = F2(function(a, b) { return _Utils_cmp(a, b) >= 0; });
+
+var _Utils_compare = F2(function(x, y)
+{
+	var n = _Utils_cmp(x, y);
+	return n < 0 ? elm$core$Basics$LT : n ? elm$core$Basics$GT : elm$core$Basics$EQ;
+});
+
+
+// COMMON VALUES
+
+var _Utils_Tuple0_UNUSED = 0;
+var _Utils_Tuple0 = { $: '#0' };
+
+function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
+
+function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
+
+function _Utils_chr_UNUSED(c) { return c; }
+function _Utils_chr(c) { return new String(c); }
+
+
+// RECORDS
+
+function _Utils_update(oldRecord, updatedFields)
+{
+	var newRecord = {};
+
+	for (var key in oldRecord)
+	{
+		newRecord[key] = oldRecord[key];
+	}
+
+	for (var key in updatedFields)
+	{
+		newRecord[key] = updatedFields[key];
+	}
+
+	return newRecord;
+}
+
+
+// APPEND
+
+var _Utils_append = F2(_Utils_ap);
+
+function _Utils_ap(xs, ys)
+{
+	// append Strings
+	if (typeof xs === 'string')
+	{
+		return xs + ys;
+	}
+
+	// append Lists
+	if (!xs.b)
+	{
+		return ys;
+	}
+	var root = _List_Cons(xs.a, ys);
+	xs = xs.b
+	for (var curr = root; xs.b; xs = xs.b) // WHILE_CONS
+	{
+		curr = curr.b = _List_Cons(xs.a, ys);
+	}
+	return root;
+}
+
+
+
+var _List_Nil_UNUSED = { $: 0 };
+var _List_Nil = { $: '[]' };
+
+function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
+
+
+var _List_cons = F2(_List_Cons);
+
+function _List_fromArray(arr)
+{
+	var out = _List_Nil;
+	for (var i = arr.length; i--; )
+	{
+		out = _List_Cons(arr[i], out);
+	}
+	return out;
+}
+
+function _List_toArray(xs)
+{
+	for (var out = []; xs.b; xs = xs.b) // WHILE_CONS
+	{
+		out.push(xs.a);
+	}
+	return out;
+}
+
+var _List_map2 = F3(function(f, xs, ys)
+{
+	for (var arr = []; xs.b && ys.b; xs = xs.b, ys = ys.b) // WHILE_CONSES
+	{
+		arr.push(A2(f, xs.a, ys.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map3 = F4(function(f, xs, ys, zs)
+{
+	for (var arr = []; xs.b && ys.b && zs.b; xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A3(f, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map4 = F5(function(f, ws, xs, ys, zs)
+{
+	for (var arr = []; ws.b && xs.b && ys.b && zs.b; ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A4(f, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map5 = F6(function(f, vs, ws, xs, ys, zs)
+{
+	for (var arr = []; vs.b && ws.b && xs.b && ys.b && zs.b; vs = vs.b, ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A5(f, vs.a, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_sortBy = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		return _Utils_cmp(f(a), f(b));
+	}));
+});
+
+var _List_sortWith = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		var ord = A2(f, a, b);
+		return ord === elm$core$Basics$EQ ? 0 : ord === elm$core$Basics$LT ? -1 : 1;
+	}));
+});
 
 
 
@@ -4372,10 +4372,38 @@ function _Browser_load(url)
 		}
 	}));
 }
-var elm$core$Array$branchFactor = 32;
+var author$project$Main$Team = F3(
+	function (fullName, nickname, logoUrl) {
+		return {fullName: fullName, logoUrl: logoUrl, nickname: nickname};
+	});
 var elm$core$Basics$EQ = {$: 'EQ'};
-var elm$core$Basics$GT = {$: 'GT'};
 var elm$core$Basics$LT = {$: 'LT'};
+var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
+var elm$core$Array$foldr = F3(
+	function (func, baseCase, _n0) {
+		var tree = _n0.c;
+		var tail = _n0.d;
+		var helper = F2(
+			function (node, acc) {
+				if (node.$ === 'SubTree') {
+					var subTree = node.a;
+					return A3(elm$core$Elm$JsArray$foldr, helper, acc, subTree);
+				} else {
+					var values = node.a;
+					return A3(elm$core$Elm$JsArray$foldr, func, acc, values);
+				}
+			});
+		return A3(
+			elm$core$Elm$JsArray$foldr,
+			helper,
+			A3(elm$core$Elm$JsArray$foldr, func, baseCase, tail),
+			tree);
+	});
+var elm$core$List$cons = _List_cons;
+var elm$core$Array$toList = function (array) {
+	return A3(elm$core$Array$foldr, elm$core$List$cons, _List_Nil, array);
+};
+var elm$core$Basics$GT = {$: 'GT'};
 var elm$core$Dict$foldr = F3(
 	function (func, acc, t) {
 		foldr:
@@ -4401,7 +4429,6 @@ var elm$core$Dict$foldr = F3(
 			}
 		}
 	});
-var elm$core$List$cons = _List_cons;
 var elm$core$Dict$toList = function (dict) {
 	return A3(
 		elm$core$Dict$foldr,
@@ -4429,30 +4456,49 @@ var elm$core$Set$toList = function (_n0) {
 	var dict = _n0.a;
 	return elm$core$Dict$keys(dict);
 };
-var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
-var elm$core$Array$foldr = F3(
-	function (func, baseCase, _n0) {
-		var tree = _n0.c;
-		var tail = _n0.d;
-		var helper = F2(
-			function (node, acc) {
-				if (node.$ === 'SubTree') {
-					var subTree = node.a;
-					return A3(elm$core$Elm$JsArray$foldr, helper, acc, subTree);
-				} else {
-					var values = node.a;
-					return A3(elm$core$Elm$JsArray$foldr, func, acc, values);
-				}
-			});
-		return A3(
-			elm$core$Elm$JsArray$foldr,
-			helper,
-			A3(elm$core$Elm$JsArray$foldr, func, baseCase, tail),
-			tree);
-	});
-var elm$core$Array$toList = function (array) {
-	return A3(elm$core$Array$foldr, elm$core$List$cons, _List_Nil, array);
-};
+var author$project$Main$allTeams = _List_fromArray(
+	[
+		A3(author$project$Main$Team, 'Anaheim Ducks', 'Ducks', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Ducks_Primary.png'),
+		A3(author$project$Main$Team, 'Arizona Coyotes', 'Coyotes', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Coyotes_Primary.png'),
+		A3(author$project$Main$Team, 'Boston Bruins', 'Bruins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Bruins_Primary.png'),
+		A3(author$project$Main$Team, 'Buffalo Sabres', 'Sabres', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sabres_Primary.png'),
+		A3(author$project$Main$Team, 'Calgary Flames', 'Flames', 'http://www.capsinfo.com/images/NHL_Team_Logos/calgary.png'),
+		A3(author$project$Main$Team, 'Carolina Hurricanes', 'Hurricanes', 'http://www.capsinfo.com/images/NHL_Team_Logos/carolina.png'),
+		A3(author$project$Main$Team, 'Chicago Blackhawks', 'Blackhawks', 'http://www.capsinfo.com/images/NHL_Team_Logos/chicago.png'),
+		A3(author$project$Main$Team, 'Colorado Avalanche', 'Avalanche', 'http://www.capsinfo.com/images/NHL_Team_Logos/colorado.png'),
+		A3(author$project$Main$Team, 'Dallas Stars', 'Stars', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png'),
+		A3(author$project$Main$Team, 'Detroit Red Wings', 'Red Wings', 'http://www.capsinfo.com/images/NHL_Team_Logos/detroit.png'),
+		A3(author$project$Main$Team, 'Edmonton Oilers', 'Oilers', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Oilers_Primary.png'),
+		A3(author$project$Main$Team, 'Hartford Whalers', 'Whalers', 'https://www.clipartmax.com/png/full/10-101501_whalers-hockey-team-based-on-their-percentage-of-the-nhl-logos-hartford.png'),
+		A3(author$project$Main$Team, 'Los Angeles Kings', 'Kings', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Kings_Primary.png'),
+		A3(author$project$Main$Team, 'Montreal Canadiens', 'Canadiens', 'http://www.capsinfo.com/images/NHL_Team_Logos/montreal.png'),
+		A3(author$project$Main$Team, 'Nashville Predators', 'Predators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Predators_Primary.png'),
+		A3(author$project$Main$Team, 'New York Islanders', 'Islanders', 'http://www.capsinfo.com/images/NHL_Team_Logos/NY-Islanders-Primary.png'),
+		A3(author$project$Main$Team, 'New York Rangers', 'Rangers', 'http://www.capsinfo.com/images/NHL_Team_Logos/newyorkr.png'),
+		A3(author$project$Main$Team, 'Ottawa Senators', 'Senators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Senators_Primary.png'),
+		A3(author$project$Main$Team, 'Philadelphia Flyers', 'Flyers', 'http://www.capsinfo.com/images/NHL_Team_Logos/philadelphia.gif'),
+		A3(author$project$Main$Team, 'Pittsburgh Penguins', 'Penguins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Penguins_Primary.png'),
+		A3(author$project$Main$Team, 'San Jose Sharks', 'Sharks', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sharks_Primary.png'),
+		A3(author$project$Main$Team, 'St. Louis Blues', 'Blues', 'http://www.capsinfo.com/images/NHL_Team_Logos/stlouis.png'),
+		A3(author$project$Main$Team, 'Tampa Bay Lightning', 'Lightning', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Lightning_Primary.png'),
+		A3(author$project$Main$Team, 'Toronto Maple Leafs', 'Maple Leafs', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_MapleLeafs_Primary.png'),
+		A3(author$project$Main$Team, 'Vegas Golden Knights', 'Knights', 'http://www.stickpng.com/assets/images/5a4fbbe1da2b4f099b95da21.png'),
+		A3(author$project$Main$Team, 'Washington Capitals', 'Capitals', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Capitals_Primary.png'),
+		A3(author$project$Main$Team, 'Winnipeg Jets', 'Jets', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Jets_Primary.png'),
+		A3(author$project$Main$Team, 'Chicago Cubs', 'Cubs', 'http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_Cubs.png'),
+		A3(author$project$Main$Team, 'Chicago White Sox', 'White Sox', 'http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_White_Sox.png'),
+		A3(author$project$Main$Team, 'Los Angeles Dodgers', 'Dodgers', 'http://www.capsinfo.com/images/MLB_Team_Logos/LosAngeles_Dodgers.png'),
+		A3(author$project$Main$Team, 'Milwaukee Brewers', 'Brewers', 'http://www.capsinfo.com/images/MLB_Team_Logos/Milwaukee_Brewers.png'),
+		A3(author$project$Main$Team, 'Carolina Panthers', 'Panthers', 'https://www.clipartmax.com/png/full/22-220847_being-a-panthers-fan-pays-off-in-more-ways-than-one-fathead.png'),
+		A3(author$project$Main$Team, 'Dallas Cowboys', 'Cowboys', 'https://www.clipartmax.com/png/full/120-1207993_dallas-cowboys-logo-dallas-cowboys-helmet-logo.png'),
+		A3(author$project$Main$Team, 'Jacksonville Jaguars', 'Jaguars', 'https://www.clipartmax.com/png/full/113-1133772_its-the-day-the-jaguars-along-with-every-other-team-jacksonville-jaguars.png'),
+		A3(author$project$Main$Team, 'Washington Redskins', 'Redskins', 'https://www.clipartmax.com/png/full/216-2169983_redskins-helmet-clip-art-washington-redskins-helmet.png'),
+		A3(author$project$Main$Team, 'FC Barcelona', 'Barcelona', 'https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png'),
+		A3(author$project$Main$Team, 'Arsenal FC', 'Arsenal', 'https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png'),
+		A3(author$project$Main$Team, 'Galactic Empire', 'Empire', 'https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png'),
+		A3(author$project$Main$Team, 'Rebel Alliance', 'Alliance', 'https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png')
+	]);
+var elm$core$Array$branchFactor = 32;
 var elm$core$Basics$ceiling = _Basics_ceiling;
 var elm$core$Basics$fdiv = _Basics_fdiv;
 var elm$core$Basics$logBase = F2(
@@ -4530,57 +4576,11 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 290, column: 19},
-					end: {line: 290, column: 29}
+					start: {line: 297, column: 19},
+					end: {line: 297, column: 29}
 				})('Cannot happen');
 		}
 	});
-var author$project$Main$Team = F3(
-	function (fullName, nickname, logoUrl) {
-		return {fullName: fullName, logoUrl: logoUrl, nickname: nickname};
-	});
-var author$project$Main$nhlTeams = _List_fromArray(
-	[
-		A3(author$project$Main$Team, 'Anaheim Ducks', 'Ducks', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Ducks_Primary.png'),
-		A3(author$project$Main$Team, 'Arizona Coyotes', 'Coyotes', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Coyotes_Primary.png'),
-		A3(author$project$Main$Team, 'Boston Bruins', 'Bruins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Bruins_Primary.png'),
-		A3(author$project$Main$Team, 'Buffalo Sabres', 'Sabres', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sabres_Primary.png'),
-		A3(author$project$Main$Team, 'Calgary Flames', 'Flames', 'http://www.capsinfo.com/images/NHL_Team_Logos/calgary.png'),
-		A3(author$project$Main$Team, 'Carolina Hurricans', 'Hurricanes', 'http://www.capsinfo.com/images/NHL_Team_Logos/carolina.png'),
-		A3(author$project$Main$Team, 'Chicago Blackhawks', 'Blackhawks', 'http://www.capsinfo.com/images/NHL_Team_Logos/chicago.png'),
-		A3(author$project$Main$Team, 'Colorado Avalanche', 'Avalanche', 'http://www.capsinfo.com/images/NHL_Team_Logos/colorado.png'),
-		A3(author$project$Main$Team, 'Dallas Stars', 'Stars', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png'),
-		A3(author$project$Main$Team, 'Detroit Red Wings', 'Red Wings', 'http://www.capsinfo.com/images/NHL_Team_Logos/detroit.png'),
-		A3(author$project$Main$Team, 'Edmonton Oilers', 'Oilers', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Oilers_Primary.png'),
-		A3(author$project$Main$Team, 'Hartford Whalers', 'Whalers', 'https://www.clipartmax.com/png/full/10-101501_whalers-hockey-team-based-on-their-percentage-of-the-nhl-logos-hartford.png'),
-		A3(author$project$Main$Team, 'Los Angeles Kings', 'Kings', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Kings_Primary.png'),
-		A3(author$project$Main$Team, 'Montreal Canadiens', 'Canadiens', 'http://www.capsinfo.com/images/NHL_Team_Logos/montreal.png'),
-		A3(author$project$Main$Team, 'Nashville Predators', 'Predators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Predators_Primary.png'),
-		A3(author$project$Main$Team, 'New York Islanders', 'Islanders', 'http://www.capsinfo.com/images/NHL_Team_Logos/NY-Islanders-Primary.png'),
-		A3(author$project$Main$Team, 'New York Rangers', 'Rangers', 'http://www.capsinfo.com/images/NHL_Team_Logos/newyorkr.png'),
-		A3(author$project$Main$Team, 'Ottawa Senators', 'Senators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Senators_Primary.png'),
-		A3(author$project$Main$Team, 'Philadelphia Flyers', 'Flyers', 'http://www.capsinfo.com/images/NHL_Team_Logos/philadelphia.gif'),
-		A3(author$project$Main$Team, 'Pittsburgh Penguins', 'Penguins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Penguins_Primary.png'),
-		A3(author$project$Main$Team, 'San Jose Sharks', 'Sharks', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sharks_Primary.png'),
-		A3(author$project$Main$Team, 'St. Louis Blues', 'Blues', 'http://www.capsinfo.com/images/NHL_Team_Logos/stlouis.png'),
-		A3(author$project$Main$Team, 'Tampa Bay Lightning', 'Lightning', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Lightning_Primary.png'),
-		A3(author$project$Main$Team, 'Toronto Maple Leafs', 'Maple Leafs', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_MapleLeafs_Primary.png'),
-		A3(author$project$Main$Team, 'Vegas Golden Knights', 'Knights', 'http://www.stickpng.com/assets/images/5a4fbbe1da2b4f099b95da21.png'),
-		A3(author$project$Main$Team, 'Washington Capitals', 'Capitals', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Capitals_Primary.png'),
-		A3(author$project$Main$Team, 'Winnipeg Jets', 'Jets', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Jets_Primary.png'),
-		A3(author$project$Main$Team, 'Chicago Cubs', 'Cubs', 'http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_Cubs.png'),
-		A3(author$project$Main$Team, 'Chicago White Sox', 'White Sox', 'http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_White_Sox.png'),
-		A3(author$project$Main$Team, 'Los Angeles Dodgers', 'Dodgers', 'http://www.capsinfo.com/images/MLB_Team_Logos/LosAngeles_Dodgers.png'),
-		A3(author$project$Main$Team, 'Milwaukee Brewers', 'Brewers', 'http://www.capsinfo.com/images/MLB_Team_Logos/Milwaukee_Brewers.png'),
-		A3(author$project$Main$Team, 'Carolina Panthers', 'Panthers', 'https://www.clipartmax.com/png/full/22-220847_being-a-panthers-fan-pays-off-in-more-ways-than-one-fathead.png'),
-		A3(author$project$Main$Team, 'Dallas Cowboys', 'Cowboys', 'https://www.clipartmax.com/png/full/120-1207993_dallas-cowboys-logo-dallas-cowboys-helmet-logo.png'),
-		A3(author$project$Main$Team, 'Jacksonville Jaguars', 'Jaguars', 'https://www.clipartmax.com/png/full/113-1133772_its-the-day-the-jaguars-along-with-every-other-team-jacksonville-jaguars.png'),
-		A3(author$project$Main$Team, 'Washington Redskins', 'Redskins', 'https://www.clipartmax.com/png/full/216-2169983_redskins-helmet-clip-art-washington-redskins-helmet.png'),
-		A3(author$project$Main$Team, 'FC Barcelona', 'Barcelona', 'https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png'),
-		A3(author$project$Main$Team, 'Arsenal FC', 'Arsenal', 'https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png'),
-		A3(author$project$Main$Team, 'Galactic Empire', 'Empire', 'https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png'),
-		A3(author$project$Main$Team, 'Rebel Alliance', 'Alliance', 'https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png')
-	]);
 var elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
 		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
@@ -4989,7 +4989,7 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$init = function (_n0) {
-	var teamArray = elm$core$Array$fromList(author$project$Main$nhlTeams);
+	var teamArray = elm$core$Array$fromList(author$project$Main$allTeams);
 	var defaultHome = A2(author$project$Main$forceGet, teamArray, 1);
 	var defaultAway = A2(author$project$Main$forceGet, teamArray, 0);
 	var mtModel = {awayPowerPlayMs: 0, awayScore: 0, awayTeam: defaultAway, awayTeamIndex: 0, homePowerPlayMs: 0, homeScore: 0, homeTeam: defaultHome, homeTeamIndex: 1, teams: teamArray};
@@ -5529,6 +5529,7 @@ var author$project$Main$prevIndex = F2(
 	function (xs, curInd) {
 		return (!curInd) ? (elm$core$Array$length(xs) - 1) : (curInd - 1);
 	});
+var author$project$Main$Home = {$: 'Home'};
 var author$project$Main$selectTeam = F3(
 	function (model, getNewIndex, getCurIndex) {
 		var i = A2(
@@ -5538,6 +5539,29 @@ var author$project$Main$selectTeam = F3(
 		var newTeam = A2(author$project$Main$forceGet, model.teams, i);
 		return _Utils_Tuple2(i, newTeam);
 	});
+var author$project$Main$updateTeam = F3(
+	function (tp, model, getNewIndex) {
+		var getCurIndex = _Utils_eq(tp, author$project$Main$Home) ? function ($) {
+			return $.homeTeamIndex;
+		} : function ($) {
+			return $.awayTeamIndex;
+		};
+		var _n0 = A3(author$project$Main$selectTeam, model, getNewIndex, getCurIndex);
+		var i = _n0.a;
+		var newTeam = _n0.b;
+		if (tp.$ === 'Home') {
+			return _Utils_update(
+				model,
+				{homeTeam: newTeam, homeTeamIndex: i});
+		} else {
+			return _Utils_update(
+				model,
+				{awayTeam: newTeam, awayTeamIndex: i});
+		}
+	});
+var author$project$Main$withNoCmd = function (model) {
+	return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+};
 var elm$core$Basics$round = _Basics_round;
 var author$project$Main$update = F2(
 	function (msg, model) {
@@ -5557,126 +5581,84 @@ var author$project$Main$update = F2(
 						model,
 						{awayPowerPlayMs: awayPPMs, homePowerPlayMs: homePPMs}),
 					elm$core$Platform$Cmd$none);
-			case 'PrevAwayTeam':
-				var _n1 = A3(
-					author$project$Main$selectTeam,
-					model,
-					author$project$Main$prevIndex,
-					function ($) {
-						return $.awayTeamIndex;
-					});
-				var i = _n1.a;
-				var newTeam = _n1.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{awayTeam: newTeam, awayTeamIndex: i}),
-					elm$core$Platform$Cmd$none);
-			case 'NextAwayTeam':
-				var _n2 = A3(
-					author$project$Main$selectTeam,
-					model,
-					author$project$Main$nextIndex,
-					function ($) {
-						return $.awayTeamIndex;
-					});
-				var i = _n2.a;
-				var newTeam = _n2.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{awayTeam: newTeam, awayTeamIndex: i}),
-					elm$core$Platform$Cmd$none);
-			case 'PrevHomeTeam':
-				var _n3 = A3(
-					author$project$Main$selectTeam,
-					model,
-					author$project$Main$prevIndex,
-					function ($) {
-						return $.homeTeamIndex;
-					});
-				var i = _n3.a;
-				var newTeam = _n3.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{homeTeam: newTeam, homeTeamIndex: i}),
-					elm$core$Platform$Cmd$none);
-			case 'NextHomeTeam':
-				var _n4 = A3(
-					author$project$Main$selectTeam,
-					model,
-					author$project$Main$nextIndex,
-					function ($) {
-						return $.homeTeamIndex;
-					});
-				var i = _n4.a;
-				var newTeam = _n4.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{homeTeam: newTeam, homeTeamIndex: i}),
-					elm$core$Platform$Cmd$none);
-			case 'ResetAway':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{awayPowerPlayMs: 0, awayScore: 0}),
-					elm$core$Platform$Cmd$none);
-			case 'IncrAwayScore':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{awayScore: model.awayScore + 1}),
-					elm$core$Platform$Cmd$none);
-			case 'ResetHome':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{homePowerPlayMs: 0, homeScore: 0}),
-					elm$core$Platform$Cmd$none);
-			case 'IncrHomeScore':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{homeScore: model.homeScore + 1}),
-					elm$core$Platform$Cmd$none);
-			case 'StartAwayPowerPlay':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{awayPowerPlayMs: author$project$Main$powerPlayDurationMs}),
-					elm$core$Platform$Cmd$none);
-			case 'StopAwayPowerPlay':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{awayPowerPlayMs: 0}),
-					elm$core$Platform$Cmd$none);
-			case 'StartHomePowerPlay':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{homePowerPlayMs: author$project$Main$powerPlayDurationMs}),
-					elm$core$Platform$Cmd$none);
+			case 'PrevTeam':
+				var tp = msg.a;
+				return author$project$Main$withNoCmd(
+					A3(author$project$Main$updateTeam, tp, model, author$project$Main$prevIndex));
+			case 'NextTeam':
+				var tp = msg.a;
+				return author$project$Main$withNoCmd(
+					A3(author$project$Main$updateTeam, tp, model, author$project$Main$nextIndex));
+			case 'Reset':
+				var tp = msg.a;
+				if (tp.$ === 'Home') {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{homePowerPlayMs: 0, homeScore: 0}));
+				} else {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{awayPowerPlayMs: 0, awayScore: 0}));
+				}
+			case 'IncrScore':
+				var tp = msg.a;
+				if (tp.$ === 'Home') {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{homeScore: model.homeScore + 1}));
+				} else {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{awayScore: model.awayScore + 1}));
+				}
+			case 'StartPowerPlay':
+				var tp = msg.a;
+				if (tp.$ === 'Home') {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{homePowerPlayMs: author$project$Main$powerPlayDurationMs}));
+				} else {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{awayPowerPlayMs: author$project$Main$powerPlayDurationMs}));
+				}
 			default:
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{homePowerPlayMs: 0}),
-					elm$core$Platform$Cmd$none);
+				var tp = msg.a;
+				if (tp.$ === 'Home') {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{homePowerPlayMs: 0}));
+				} else {
+					return author$project$Main$withNoCmd(
+						_Utils_update(
+							model,
+							{awayPowerPlayMs: 0}));
+				}
 		}
 	});
-var author$project$Main$IncrAwayScore = {$: 'IncrAwayScore'};
-var author$project$Main$IncrHomeScore = {$: 'IncrHomeScore'};
-var author$project$Main$NextAwayTeam = {$: 'NextAwayTeam'};
-var author$project$Main$NextHomeTeam = {$: 'NextHomeTeam'};
-var author$project$Main$ResetAway = {$: 'ResetAway'};
-var author$project$Main$ResetHome = {$: 'ResetHome'};
-var author$project$Main$StartAwayPowerPlay = {$: 'StartAwayPowerPlay'};
-var author$project$Main$StartHomePowerPlay = {$: 'StartHomePowerPlay'};
-var author$project$Main$StopAwayPowerPlay = {$: 'StopAwayPowerPlay'};
-var author$project$Main$StopHomePowerPlay = {$: 'StopHomePowerPlay'};
+var author$project$Main$Away = {$: 'Away'};
+var author$project$Main$IncrScore = function (a) {
+	return {$: 'IncrScore', a: a};
+};
+var author$project$Main$NextTeam = function (a) {
+	return {$: 'NextTeam', a: a};
+};
+var author$project$Main$Reset = function (a) {
+	return {$: 'Reset', a: a};
+};
+var author$project$Main$StartPowerPlay = function (a) {
+	return {$: 'StartPowerPlay', a: a};
+};
+var author$project$Main$StopPowerPlay = function (a) {
+	return {$: 'StopPowerPlay', a: a};
+};
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$map2 = _Json_map2;
 var elm$json$Json$Decode$succeed = _Json_succeed;
@@ -5755,7 +5737,7 @@ var author$project$Main$powerPlayButton = F2(
 			_List_fromArray(
 				[
 					elm$html$Html$Attributes$align('center'),
-					elm$html$Html$Attributes$class('blue-bg big-white-text'),
+					elm$html$Html$Attributes$class('pp-button blue-bg big-white-text'),
 					elm$html$Html$Events$onClick(msg)
 				]),
 			_List_fromArray(
@@ -5767,7 +5749,7 @@ var author$project$Main$powerPlayButton = F2(
 			_List_fromArray(
 				[
 					elm$html$Html$Attributes$align('center'),
-					elm$html$Html$Attributes$class('sunken-text'),
+					elm$html$Html$Attributes$class('pp-button sunken-text'),
 					elm$html$Html$Events$onClick(msg)
 				]),
 			_List_fromArray(
@@ -5776,6 +5758,22 @@ var author$project$Main$powerPlayButton = F2(
 				]));
 	});
 var elm$core$String$toUpper = _String_toUpper;
+var author$project$Main$teamNameDiv = F2(
+	function (isPP, name) {
+		var cls = isPP ? 'blue-bg big-white-text' : 'sunken-text';
+		return A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$align('center'),
+					elm$html$Html$Attributes$class(cls)
+				]),
+			_List_fromArray(
+				[
+					elm$html$Html$text(
+					elm$core$String$toUpper(name))
+				]));
+	});
 var elm$html$Html$img = _VirtualDom_node('img');
 var elm$html$Html$table = _VirtualDom_node('table');
 var elm$html$Html$td = _VirtualDom_node('td');
@@ -5795,8 +5793,10 @@ var elm$html$Html$Attributes$src = function (url) {
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var author$project$Main$mainTable = function (model) {
-	var homePPMsg = (!model.homePowerPlayMs) ? author$project$Main$StartHomePowerPlay : author$project$Main$StopHomePowerPlay;
-	var awayPPMsg = (!model.awayPowerPlayMs) ? author$project$Main$StartAwayPowerPlay : author$project$Main$StopAwayPowerPlay;
+	var isHomePP = model.homePowerPlayMs > 0;
+	var isAwayPP = model.awayPowerPlayMs > 0;
+	var homePPMsg = isHomePP ? author$project$Main$StopPowerPlay(author$project$Main$Home) : author$project$Main$StartPowerPlay(author$project$Main$Home);
+	var awayPPMsg = isAwayPP ? author$project$Main$StopPowerPlay(author$project$Main$Away) : author$project$Main$StartPowerPlay(author$project$Main$Away);
 	var _n0 = _Utils_eq(model.awayScore, model.homeScore) ? _Utils_Tuple2('', '') : ((_Utils_cmp(model.awayScore, model.homeScore) > 0) ? _Utils_Tuple2('glow', '') : _Utils_Tuple2('', 'glow'));
 	var awayScoreGlow = _n0.a;
 	var homeScoreGlow = _n0.b;
@@ -5818,7 +5818,8 @@ var author$project$Main$mainTable = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$Attributes$align('center'),
-								elm$html$Html$Events$onClick(author$project$Main$NextAwayTeam),
+								elm$html$Html$Events$onClick(
+								author$project$Main$NextTeam(author$project$Main$Away)),
 								elm$html$Html$Attributes$class('noselect'),
 								A2(elm$html$Html$Attributes$style, 'width', '50%')
 							]),
@@ -5838,7 +5839,8 @@ var author$project$Main$mainTable = function (model) {
 						_List_fromArray(
 							[
 								elm$html$Html$Attributes$align('center'),
-								elm$html$Html$Events$onClick(author$project$Main$NextHomeTeam),
+								elm$html$Html$Events$onClick(
+								author$project$Main$NextTeam(author$project$Main$Home)),
 								elm$html$Html$Attributes$class('noselect')
 							]),
 						_List_fromArray(
@@ -5867,18 +5869,7 @@ var author$project$Main$mainTable = function (model) {
 							]),
 						_List_fromArray(
 							[
-								A2(
-								elm$html$Html$div,
-								_List_fromArray(
-									[
-										elm$html$Html$Attributes$align('center'),
-										elm$html$Html$Attributes$class('sunken-text')
-									]),
-								_List_fromArray(
-									[
-										elm$html$Html$text(
-										elm$core$String$toUpper(model.awayTeam.fullName))
-									]))
+								A2(author$project$Main$teamNameDiv, isAwayPP, model.awayTeam.fullName)
 							])),
 						A2(
 						elm$html$Html$td,
@@ -5889,18 +5880,7 @@ var author$project$Main$mainTable = function (model) {
 							]),
 						_List_fromArray(
 							[
-								A2(
-								elm$html$Html$div,
-								_List_fromArray(
-									[
-										elm$html$Html$Attributes$align('center'),
-										elm$html$Html$Attributes$class('sunken-text')
-									]),
-								_List_fromArray(
-									[
-										elm$html$Html$text(
-										elm$core$String$toUpper(model.homeTeam.fullName))
-									]))
+								A2(author$project$Main$teamNameDiv, isHomePP, model.homeTeam.fullName)
 							]))
 					])),
 				A2(
@@ -5912,7 +5892,8 @@ var author$project$Main$mainTable = function (model) {
 						elm$html$Html$td,
 						_List_fromArray(
 							[
-								elm$html$Html$Events$onClick(author$project$Main$IncrAwayScore),
+								elm$html$Html$Events$onClick(
+								author$project$Main$IncrScore(author$project$Main$Away)),
 								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font ' + awayScoreGlow),
 								elm$html$Html$Attributes$align('center')
 							]),
@@ -5925,7 +5906,8 @@ var author$project$Main$mainTable = function (model) {
 						elm$html$Html$td,
 						_List_fromArray(
 							[
-								elm$html$Html$Events$onClick(author$project$Main$IncrHomeScore),
+								elm$html$Html$Events$onClick(
+								author$project$Main$IncrScore(author$project$Main$Home)),
 								elm$html$Html$Attributes$class('bordered noselect scoreboard-text large-font ' + homeScoreGlow),
 								elm$html$Html$Attributes$align('center')
 							]),
@@ -5973,14 +5955,20 @@ var author$project$Main$mainTable = function (model) {
 						_List_Nil,
 						_List_fromArray(
 							[
-								A2(author$project$Main$decrButton, author$project$Main$ResetAway, _List_Nil)
+								A2(
+								author$project$Main$decrButton,
+								author$project$Main$Reset(author$project$Main$Away),
+								_List_Nil)
 							])),
 						A2(
 						elm$html$Html$td,
 						_List_Nil,
 						_List_fromArray(
 							[
-								A2(author$project$Main$decrButton, author$project$Main$ResetHome, _List_Nil)
+								A2(
+								author$project$Main$decrButton,
+								author$project$Main$Reset(author$project$Main$Home),
+								_List_Nil)
 							]))
 					]))
 			]));
