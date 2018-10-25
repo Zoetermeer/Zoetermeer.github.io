@@ -4469,6 +4469,7 @@ var author$project$Main$allTeams = _List_fromArray(
 		A3(author$project$Main$Team, 'Dallas Stars', 'Stars', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png'),
 		A3(author$project$Main$Team, 'Detroit Red Wings', 'Red Wings', 'http://www.capsinfo.com/images/NHL_Team_Logos/detroit.png'),
 		A3(author$project$Main$Team, 'Edmonton Oilers', 'Oilers', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Oilers_Primary.png'),
+		A3(author$project$Main$Team, 'Florida Panthers', 'Panthers', 'http://content.sportslogos.net/logos/1/13/full/8078_florida_panthers-primary-2017.png'),
 		A3(author$project$Main$Team, 'Hartford Whalers', 'Whalers', 'https://www.clipartmax.com/png/full/10-101501_whalers-hockey-team-based-on-their-percentage-of-the-nhl-logos-hartford.png'),
 		A3(author$project$Main$Team, 'Los Angeles Kings', 'Kings', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Kings_Primary.png'),
 		A3(author$project$Main$Team, 'Montreal Canadiens', 'Canadiens', 'http://www.capsinfo.com/images/NHL_Team_Logos/montreal.png'),
@@ -4576,8 +4577,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 301, column: 19},
-					end: {line: 301, column: 29}
+					start: {line: 302, column: 19},
+					end: {line: 302, column: 29}
 				})('Cannot happen');
 		}
 	});
