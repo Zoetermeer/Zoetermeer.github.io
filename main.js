@@ -4484,6 +4484,7 @@ var author$project$Main$allTeams = _List_fromArray(
 		A3(author$project$Main$Team, 'Tampa Bay Lightning', 'Lightning', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Lightning_Primary.png'),
 		A3(author$project$Main$Team, 'Toronto Maple Leafs', 'Maple Leafs', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_MapleLeafs_Primary.png'),
 		A3(author$project$Main$Team, 'Vegas Golden Knights', 'Knights', 'http://www.stickpng.com/assets/images/5a4fbbe1da2b4f099b95da21.png'),
+		A3(author$project$Main$Team, 'Vancouver Canucks', 'Canucks', 'assets/images/canucks_logo.svg'),
 		A3(author$project$Main$Team, 'Washington Capitals', 'Capitals', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Capitals_Primary.png'),
 		A3(author$project$Main$Team, 'Winnipeg Jets', 'Jets', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Jets_Primary.png'),
 		A3(author$project$Main$Team, 'Chicago Cubs', 'Cubs', 'http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_Cubs.png'),
@@ -4577,8 +4578,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 302, column: 19},
-					end: {line: 302, column: 29}
+					start: {line: 303, column: 19},
+					end: {line: 303, column: 29}
 				})('Cannot happen');
 		}
 	});
