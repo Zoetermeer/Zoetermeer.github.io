@@ -37,18 +37,20 @@ type alias Model =
 
 allTeams : List Team
 allTeams =
-    [ Team "Anaheim Ducks" "Ducks" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Ducks_Primary.png"
+    [ Team "Anaheim Ducks" "Ducks" "assets/images/anaheim-ducks.svg"
     , Team "Arizona Coyotes" "Coyotes" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Coyotes_Primary.png"
     , Team "Boston Bruins" "Bruins" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Bruins_Primary.png"
     , Team "Buffalo Sabres" "Sabres" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sabres_Primary.png"
     , Team "Calgary Flames" "Flames" "http://www.capsinfo.com/images/NHL_Team_Logos/calgary.png"
-    , Team "Carolina Hurricanes" "Hurricanes" "http://www.capsinfo.com/images/NHL_Team_Logos/carolina.png"
+    , Team "Carolina Hurricanes" "Hurricanes" "assets/images/carolina-hurricanes.svg"
     , Team "Chicago Blackhawks" "Blackhawks" "http://www.capsinfo.com/images/NHL_Team_Logos/chicago.png"
     , Team "Colorado Avalanche" "Avalanche" "http://www.capsinfo.com/images/NHL_Team_Logos/colorado.png"
+    , Team "Cyclones" "Cyclones" "https://myhockeyrankings.com/uploads/logos/00009b_a.png"
     , Team "Dallas Stars" "Stars" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png"
-    , Team "Detroit Red Wings" "Red Wings" "http://www.capsinfo.com/images/NHL_Team_Logos/detroit.png"
+    , Team "Detroit Red Wings" "Red Wings" "assets/images/detroit-red-wings.svg"
     , Team "Edmonton Oilers" "Oilers" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Oilers_Primary.png"
-    , Team "Florida Panthers" "Panthers" "http://content.sportslogos.net/logos/1/13/full/8078_florida_panthers-primary-2017.png"
+    , Team "Falcons" "Falcons" "https://cdn4.sportngin.com/attachments/logo_graphic/5553/2208/falcons_white_hires_small.jpg"
+    , Team "Florida Panthers" "Panthers" "assets/images/florida-panthers.svg"
     , Team "Hartford Whalers" "Whalers" "https://www.clipartmax.com/png/full/10-101501_whalers-hockey-team-based-on-their-percentage-of-the-nhl-logos-hartford.png"
     , Team "Los Angeles Kings" "Kings" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Kings_Primary.png"
     , Team "Montreal Canadiens" "Canadiens" "http://www.capsinfo.com/images/NHL_Team_Logos/montreal.png"
@@ -56,15 +58,15 @@ allTeams =
     , Team "New York Islanders" "Islanders" "http://www.capsinfo.com/images/NHL_Team_Logos/NY-Islanders-Primary.png"
     , Team "New York Rangers" "Rangers" "http://www.capsinfo.com/images/NHL_Team_Logos/newyorkr.png"
     , Team "Ottawa Senators" "Senators" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Senators_Primary.png"
-    , Team "Philadelphia Flyers" "Flyers" "http://www.capsinfo.com/images/NHL_Team_Logos/philadelphia.gif"
+    , Team "Philadelphia Flyers" "Flyers" "assets/images/philadelphia-flyers.svg"
     , Team "Pittsburgh Penguins" "Penguins" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Penguins_Primary.png"
     , Team "San Jose Sharks" "Sharks" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sharks_Primary.png"
     , Team "St. Louis Blues" "Blues" "http://www.capsinfo.com/images/NHL_Team_Logos/stlouis.png"
     , Team "Tampa Bay Lightning" "Lightning" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Lightning_Primary.png"
     , Team "Toronto Maple Leafs" "Maple Leafs" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_MapleLeafs_Primary.png"
-    , Team "Vancouver Canucks" "Canucks" "assets/images/canucks_logo.svg"
-    , Team "Vegas Golden Knights" "Knights" "http://www.stickpng.com/assets/images/5a4fbbe1da2b4f099b95da21.png"
-    , Team "Washington Capitals" "Capitals" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Capitals_Primary.png"
+    , Team "Vancouver Canucks" "Canucks" "assets/images/vancouver-canucks.svg"
+    , Team "Vegas Golden Knights" "Knights" "assets/images/las-vegas-knights.svg"
+    , Team "Washington Capitals" "Capitals" "assets/images/washington-capitals.svg"
     , Team "Winnipeg Jets" "Jets" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Jets_Primary.png"
     , Team "Chicago Cubs" "Cubs" "http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_Cubs.png"
     , Team "Chicago White Sox" "White Sox" "http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_White_Sox.png"
@@ -241,7 +243,7 @@ mainTable model =
     [ td [ align "center", onClick (NextTeam Away), class "noselect", style "width" "50%" ]
       [ img [ src model.awayTeam.logoUrl, height 150 ] []
       ]
-    , td [ align "center", onClick (NextTeam Home), class "noselect" ]
+    , td [ align "center", onClick (NextTeam Home), class "noselect", style "width" "50%" ]
       [ img [ src model.homeTeam.logoUrl, height 150 ] []
       ]
     ]
