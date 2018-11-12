@@ -5786,12 +5786,6 @@ var elm$html$Html$img = _VirtualDom_node('img');
 var elm$html$Html$table = _VirtualDom_node('table');
 var elm$html$Html$td = _VirtualDom_node('td');
 var elm$html$Html$tr = _VirtualDom_node('tr');
-var elm$html$Html$Attributes$height = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'height',
-		elm$core$String$fromInt(n));
-};
 var elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		elm$html$Html$Attributes$stringProperty,
@@ -5838,7 +5832,10 @@ var author$project$Main$mainTable = function (model) {
 								_List_fromArray(
 									[
 										elm$html$Html$Attributes$src(model.awayTeam.logoUrl),
-										elm$html$Html$Attributes$height(150)
+										A2(elm$html$Html$Attributes$style, 'max-height', '150px'),
+										A2(elm$html$Html$Attributes$style, 'max-width', '150px'),
+										A2(elm$html$Html$Attributes$style, 'width', 'auto'),
+										A2(elm$html$Html$Attributes$style, 'height', 'auto')
 									]),
 								_List_Nil)
 							])),
@@ -5859,7 +5856,10 @@ var author$project$Main$mainTable = function (model) {
 								_List_fromArray(
 									[
 										elm$html$Html$Attributes$src(model.homeTeam.logoUrl),
-										elm$html$Html$Attributes$height(150)
+										A2(elm$html$Html$Attributes$style, 'max-height', '150px'),
+										A2(elm$html$Html$Attributes$style, 'max-width', '150px'),
+										A2(elm$html$Html$Attributes$style, 'width', 'auto'),
+										A2(elm$html$Html$Attributes$style, 'height', 'auto')
 									]),
 								_List_Nil)
 							]))

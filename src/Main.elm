@@ -12,7 +12,7 @@ type alias Team =
     , nickname : String
     , logoUrl : String
     }
-    
+
 
 mkTeam : String -> String -> String -> String -> String -> String -> Team
 mkTeam fullName nickname logoUrl color1 color2 color3 =
@@ -241,10 +241,10 @@ mainTable model =
   table [ class "scoreboard" ]
   [ tr []
     [ td [ align "center", onClick (NextTeam Away), class "noselect", style "width" "50%" ]
-      [ img [ src model.awayTeam.logoUrl, height 150 ] []
+      [ img [ src model.awayTeam.logoUrl, style "max-height" "150px", style "max-width" "150px", style "width" "auto", style "height" "auto" ] []
       ]
     , td [ align "center", onClick (NextTeam Home), class "noselect", style "width" "50%" ]
-      [ img [ src model.homeTeam.logoUrl, height 150 ] []
+      [ img [ src model.homeTeam.logoUrl, style "max-height" "150px", style "max-width" "150px", style "width" "auto", style "height" "auto"] []
       ]
     ]
   , tr []
