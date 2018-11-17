@@ -242,7 +242,7 @@ mainTable model =
   table [ class "scoreboard" ]
   [ tr []
     [ td [ align "center", onClick (NextTeam Away), class "noselect", style "width" "50%" ]
-      [ img [ src model.awayTeam.logoUrl, style "height" "150px", style "max-width" "150px" ] []
+      [ img [ class "noselect", src model.awayTeam.logoUrl, style "height" "150px", style "max-width" "150px" ] []
       ]
     , td [ align "center", onClick (NextTeam Home), class "noselect", style "width" "50%" ]
       [ img [ src model.homeTeam.logoUrl, style "max-height" "150px", style "max-width" "150px", style "width" "auto", style "height" "auto"] []
