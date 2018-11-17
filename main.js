@@ -4372,9 +4372,9 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$Main$Team = F3(
-	function (fullName, nickname, logoUrl) {
-		return {fullName: fullName, logoUrl: logoUrl, nickname: nickname};
+var author$project$Main$Team = F4(
+	function (city, fullName, nickname, logoUrl) {
+		return {city: city, fullName: fullName, logoUrl: logoUrl, nickname: nickname};
 	});
 var elm$core$Basics$EQ = {$: 'EQ'};
 var elm$core$Basics$LT = {$: 'LT'};
@@ -4458,49 +4458,57 @@ var elm$core$Set$toList = function (_n0) {
 };
 var author$project$Main$allTeams = _List_fromArray(
 	[
-		A3(author$project$Main$Team, 'Anaheim Ducks', 'Ducks', 'assets/images/anaheim-ducks.svg'),
-		A3(author$project$Main$Team, 'Arizona Coyotes', 'Coyotes', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Coyotes_Primary.png'),
-		A3(author$project$Main$Team, 'Boston Bruins', 'Bruins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Bruins_Primary.png'),
-		A3(author$project$Main$Team, 'Buffalo Sabres', 'Sabres', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sabres_Primary.png'),
-		A3(author$project$Main$Team, 'Calgary Flames', 'Flames', 'http://www.capsinfo.com/images/NHL_Team_Logos/calgary.png'),
-		A3(author$project$Main$Team, 'Carolina Hurricanes', 'Hurricanes', 'assets/images/carolina-hurricanes.svg'),
-		A3(author$project$Main$Team, 'Chicago Blackhawks', 'Blackhawks', 'http://www.capsinfo.com/images/NHL_Team_Logos/chicago.png'),
-		A3(author$project$Main$Team, 'Colorado Avalanche', 'Avalanche', 'http://www.capsinfo.com/images/NHL_Team_Logos/colorado.png'),
-		A3(author$project$Main$Team, 'Cyclones', 'Cyclones', 'https://myhockeyrankings.com/uploads/logos/00009b_a.png'),
-		A3(author$project$Main$Team, 'Dallas Stars', 'Stars', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png'),
-		A3(author$project$Main$Team, 'Detroit Red Wings', 'Red Wings', 'assets/images/detroit-red-wings.svg'),
-		A3(author$project$Main$Team, 'Edmonton Oilers', 'Oilers', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Oilers_Primary.png'),
-		A3(author$project$Main$Team, 'Falcons', 'Falcons', 'https://cdn4.sportngin.com/attachments/logo_graphic/5553/2208/falcons_white_hires_small.jpg'),
-		A3(author$project$Main$Team, 'Florida Panthers', 'Panthers', 'assets/images/florida-panthers.svg'),
-		A3(author$project$Main$Team, 'Hartford Whalers', 'Whalers', 'https://www.clipartmax.com/png/full/10-101501_whalers-hockey-team-based-on-their-percentage-of-the-nhl-logos-hartford.png'),
-		A3(author$project$Main$Team, 'Los Angeles Kings', 'Kings', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Kings_Primary.png'),
-		A3(author$project$Main$Team, 'Montreal Canadiens', 'Canadiens', 'http://www.capsinfo.com/images/NHL_Team_Logos/montreal.png'),
-		A3(author$project$Main$Team, 'Nashville Predators', 'Predators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Predators_Primary.png'),
-		A3(author$project$Main$Team, 'New York Islanders', 'Islanders', 'http://www.capsinfo.com/images/NHL_Team_Logos/NY-Islanders-Primary.png'),
-		A3(author$project$Main$Team, 'New York Rangers', 'Rangers', 'http://www.capsinfo.com/images/NHL_Team_Logos/newyorkr.png'),
-		A3(author$project$Main$Team, 'Ottawa Senators', 'Senators', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Senators_Primary.png'),
-		A3(author$project$Main$Team, 'Philadelphia Flyers', 'Flyers', 'assets/images/philadelphia-flyers.svg'),
-		A3(author$project$Main$Team, 'Pittsburgh Penguins', 'Penguins', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Penguins_Primary.png'),
-		A3(author$project$Main$Team, 'San Jose Sharks', 'Sharks', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sharks_Primary.png'),
-		A3(author$project$Main$Team, 'St. Louis Blues', 'Blues', 'http://www.capsinfo.com/images/NHL_Team_Logos/stlouis.png'),
-		A3(author$project$Main$Team, 'Tampa Bay Lightning', 'Lightning', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Lightning_Primary.png'),
-		A3(author$project$Main$Team, 'Toronto Maple Leafs', 'Maple Leafs', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_MapleLeafs_Primary.png'),
-		A3(author$project$Main$Team, 'Vancouver Canucks', 'Canucks', 'assets/images/vancouver-canucks.svg'),
-		A3(author$project$Main$Team, 'Vegas Golden Knights', 'Knights', 'assets/images/las-vegas-knights.svg'),
-		A3(author$project$Main$Team, 'Washington Capitals', 'Capitals', 'assets/images/washington-capitals.svg'),
-		A3(author$project$Main$Team, 'Winnipeg Jets', 'Jets', 'http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Jets_Primary.png'),
-		A3(author$project$Main$Team, 'Chicago Cubs', 'Cubs', 'http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_Cubs.png'),
-		A3(author$project$Main$Team, 'Chicago White Sox', 'White Sox', 'http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_White_Sox.png'),
-		A3(author$project$Main$Team, 'Los Angeles Dodgers', 'Dodgers', 'http://www.capsinfo.com/images/MLB_Team_Logos/LosAngeles_Dodgers.png'),
-		A3(author$project$Main$Team, 'Milwaukee Brewers', 'Brewers', 'http://www.capsinfo.com/images/MLB_Team_Logos/Milwaukee_Brewers.png'),
-		A3(author$project$Main$Team, 'Carolina Panthers', 'Panthers', 'https://www.clipartmax.com/png/full/22-220847_being-a-panthers-fan-pays-off-in-more-ways-than-one-fathead.png'),
-		A3(author$project$Main$Team, 'Dallas Cowboys', 'Cowboys', 'https://www.clipartmax.com/png/full/120-1207993_dallas-cowboys-logo-dallas-cowboys-helmet-logo.png'),
-		A3(author$project$Main$Team, 'Jacksonville Jaguars', 'Jaguars', 'https://www.clipartmax.com/png/full/113-1133772_its-the-day-the-jaguars-along-with-every-other-team-jacksonville-jaguars.png'),
-		A3(author$project$Main$Team, 'Washington Redskins', 'Redskins', 'https://www.clipartmax.com/png/full/216-2169983_redskins-helmet-clip-art-washington-redskins-helmet.png'),
-		A3(author$project$Main$Team, 'FC Barcelona', 'Barcelona', 'https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png'),
-		A3(author$project$Main$Team, 'Arsenal FC', 'Arsenal', 'https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png'),
-		A3(author$project$Main$Team, 'Galactic Empire', 'Empire', 'https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png'),
-		A3(author$project$Main$Team, 'Rebel Alliance', 'Alliance', 'https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png')
+		A4(author$project$Main$Team, 'Anaheim', 'Anaheim Ducks', 'Ducks', 'assets/images/anaheim-ducks.svg'),
+		A4(author$project$Main$Team, 'Arizona', 'Arizona Coyotes', 'Coyotes', 'assets/images/arizona-coyotes.svg'),
+		A4(author$project$Main$Team, 'Boston', 'Boston Bruins', 'Bruins', 'assets/images/boston-bruins.svg'),
+		A4(author$project$Main$Team, 'Buffalo', 'Buffalo Sabres', 'Sabres', 'assets/images/buffalo-sabres.svg'),
+		A4(author$project$Main$Team, 'Calgary', 'Calgary Flames', 'Flames', 'assets/images/calgary-flames.svg'),
+		A4(author$project$Main$Team, 'Carolina', 'Carolina Hurricanes', 'Hurricanes', 'assets/images/carolina-hurricanes.svg'),
+		A4(author$project$Main$Team, 'Chicago', 'Chicago Blackhawks', 'Blackhawks', 'assets/images/chicago-blackhawks.svg'),
+		A4(author$project$Main$Team, 'Colorado', 'Colorado Avalanche', 'Avalanche', 'assets/images/colorado-avalanche.svg'),
+		A4(author$project$Main$Team, 'Columbus', 'Columbus Blue Jackets', 'Blue Jackets', 'assets/images/columbus-blue-jackets.svg'),
+		A4(author$project$Main$Team, 'North Shore', 'Cyclones', 'Cyclones', 'assets/images/cyclones.png'),
+		A4(author$project$Main$Team, 'Dallas', 'Dallas Stars', 'Stars', 'assets/images/dallas-stars.svg'),
+		A4(author$project$Main$Team, 'Detroit', 'Detroit Red Wings', 'Red Wings', 'assets/images/detroit-red-wings.svg'),
+		A4(author$project$Main$Team, 'Edmonton', 'Edmonton Oilers', 'Oilers', 'assets/images/edmonton-oilers.svg'),
+		A4(author$project$Main$Team, 'Chicago', 'Falcons', 'Falcons', 'assets/images/falcons.jpg'),
+		A4(author$project$Main$Team, 'Florida', 'Florida Panthers', 'Panthers', 'assets/images/florida-panthers.svg'),
+		A4(author$project$Main$Team, 'Hartford', 'Hartford Whalers', 'Whalers', 'assets/images/hartford-whalers.svg'),
+		A4(author$project$Main$Team, 'Los Angeles', 'Los Angeles Kings', 'Kings', 'assets/images/los-angeles-kings.svg'),
+		A4(author$project$Main$Team, 'Minnesota', 'Minnesota Wild', 'Wild', 'assets/images/minnesota-wild.svg'),
+		A4(author$project$Main$Team, 'Montreal', 'Montreal Canadiens', 'Canadiens', 'assets/images/montreal-canadiens.svg'),
+		A4(author$project$Main$Team, 'Nashville', 'Nashville Predators', 'Predators', 'assets/images/nashville-predators.svg'),
+		A4(author$project$Main$Team, 'New Jersey', 'New Jersey Devils', 'Devils', 'assets/images/new-jersey-devils.svg'),
+		A4(author$project$Main$Team, 'New York', 'New York Islanders', 'Islanders', 'assets/images/ny-islanders.svg'),
+		A4(author$project$Main$Team, 'New York', 'New York Rangers', 'Rangers', 'assets/images/ny-rangers.svg'),
+		A4(author$project$Main$Team, 'Ottawa', 'Ottawa Senators', 'Senators', 'assets/images/ottawa-senators.svg'),
+		A4(author$project$Main$Team, 'Philadelphia', 'Philadelphia Flyers', 'Flyers', 'assets/images/philadelphia-flyers.svg'),
+		A4(author$project$Main$Team, 'Pittsburgh', 'Pittsburgh Penguins', 'Penguins', 'assets/images/pittsburgh-penguins.svg'),
+		A4(author$project$Main$Team, 'Quebec', 'Quebec Nordiques', 'Nordiques', 'assets/images/quebec-nordiques.svg'),
+		A4(author$project$Main$Team, 'San Jose', 'San Jose Sharks', 'Sharks', 'assets/images/san-jose-sharks.svg'),
+		A4(author$project$Main$Team, 'St. Louis', 'St. Louis Blues', 'Blues', 'assets/images/st-louis-blues.svg'),
+		A4(author$project$Main$Team, 'Tampa Bay', 'Tampa Bay Lightning', 'Lightning', 'assets/images/tampa-bay-lightning.svg'),
+		A4(author$project$Main$Team, 'Toronto', 'Toronto Maple Leafs', 'Leafs', 'assets/images/toronto-maple-leafs.svg'),
+		A4(author$project$Main$Team, 'Vancouver', 'Vancouver Canucks', 'Canucks', 'assets/images/vancouver-canucks.svg'),
+		A4(author$project$Main$Team, 'Vegas', 'Vegas Golden Knights', 'Knights', 'assets/images/las-vegas-knights.svg'),
+		A4(author$project$Main$Team, 'Washington', 'Washington Capitals', 'Capitals', 'assets/images/washington-capitals.svg'),
+		A4(author$project$Main$Team, 'Winnipeg', 'Winnipeg Jets', 'Jets', 'assets/images/winnipeg-jets.svg'),
+		A4(author$project$Main$Team, 'Chicago', 'Chicago Cubs', 'Cubs', 'assets/images/chicago-cubs.svg'),
+		A4(author$project$Main$Team, 'Chicago', 'Chicago White Sox', 'White Sox', 'assets/images/chicago-white-sox.svg'),
+		A4(author$project$Main$Team, 'Los Angeles', 'Los Angeles Dodgers', 'Dodgers', 'assets/images/la-dodgers.svg'),
+		A4(author$project$Main$Team, 'Milwaukee', 'Milwaukee Brewers', 'Brewers', 'assets/images/milwaukee-brewers.svg'),
+		A4(author$project$Main$Team, 'Carolina', 'Carolina Panthers', 'Panthers', 'assets/images/carolina-panthers.svg'),
+		A4(author$project$Main$Team, 'Dallas', 'Dallas Cowboys', 'Cowboys', 'assets/images/dallas-cowboys.svg'),
+		A4(author$project$Main$Team, 'Jacksonville', 'Jacksonville Jaguars', 'Jaguars', 'assets/images/jacksonville-jaguars.svg'),
+		A4(author$project$Main$Team, 'Minnesota', 'Minnesota Vikings', 'Vikings', 'assets/images/minnesota-vikings.svg'),
+		A4(author$project$Main$Team, 'Oakland', 'Oakland Raiders', 'Raiders', 'assets/images/oakland-raiders.svg'),
+		A4(author$project$Main$Team, 'Philadelphia', 'Philadelphia Eagles', 'Eagles', 'assets/images/philadelphia-eagles.svg'),
+		A4(author$project$Main$Team, 'Tennessee', 'Tennessee Titans', 'Titans', 'assets/images/tennessee-titans.svg'),
+		A4(author$project$Main$Team, 'Washington', 'Washington Redskins', 'Redskins', 'assets/images/washington-redskins.svg'),
+		A4(author$project$Main$Team, 'FC', 'FC Barcelona', 'Barcelona', 'https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png'),
+		A4(author$project$Main$Team, 'The', 'Arsenal FC', 'Arsenal', 'https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png'),
+		A4(author$project$Main$Team, 'Galactic', 'Galactic Empire', 'Empire', 'https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png'),
+		A4(author$project$Main$Team, 'Rebel', 'Rebel Alliance', 'Alliance', 'https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png')
 	]);
 var elm$core$Array$branchFactor = 32;
 var elm$core$Basics$ceiling = _Basics_ceiling;
@@ -4580,8 +4588,8 @@ var author$project$Main$forceGet = F2(
 			return _Debug_todo(
 				'Main',
 				{
-					start: {line: 305, column: 19},
-					end: {line: 305, column: 29}
+					start: {line: 309, column: 19},
+					end: {line: 309, column: 29}
 				})('Cannot happen');
 		}
 	});
@@ -5766,8 +5774,12 @@ var author$project$Main$powerPlayButton = F2(
 				]));
 	});
 var elm$core$String$toUpper = _String_toUpper;
+var elm$html$Html$br = _VirtualDom_node('br');
+var elm$html$Html$span = _VirtualDom_node('span');
+var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var author$project$Main$teamNameDiv = F2(
-	function (isPP, name) {
+	function (isPP, team) {
 		var cls = isPP ? 'blue-bg big-white-text' : 'sunken-text';
 		return A2(
 			elm$html$Html$div,
@@ -5778,8 +5790,20 @@ var author$project$Main$teamNameDiv = F2(
 				]),
 			_List_fromArray(
 				[
+					A2(
+					elm$html$Html$span,
+					_List_fromArray(
+						[
+							A2(elm$html$Html$Attributes$style, 'font-size', '.3em')
+						]),
+					_List_fromArray(
+						[
+							elm$html$Html$text(
+							elm$core$String$toUpper(team.city))
+						])),
+					A2(elm$html$Html$br, _List_Nil, _List_Nil),
 					elm$html$Html$text(
-					elm$core$String$toUpper(name))
+					elm$core$String$toUpper(team.nickname))
 				]));
 	});
 var elm$html$Html$img = _VirtualDom_node('img');
@@ -5792,8 +5816,6 @@ var elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var author$project$Main$mainTable = function (model) {
 	var isHomePP = model.homePowerPlayMs > 0;
 	var isAwayPP = model.awayPowerPlayMs > 0;
@@ -5832,10 +5854,8 @@ var author$project$Main$mainTable = function (model) {
 								_List_fromArray(
 									[
 										elm$html$Html$Attributes$src(model.awayTeam.logoUrl),
-										A2(elm$html$Html$Attributes$style, 'max-height', '150px'),
-										A2(elm$html$Html$Attributes$style, 'max-width', '150px'),
-										A2(elm$html$Html$Attributes$style, 'width', 'auto'),
-										A2(elm$html$Html$Attributes$style, 'height', 'auto')
+										A2(elm$html$Html$Attributes$style, 'height', '150px'),
+										A2(elm$html$Html$Attributes$style, 'max-width', '150px')
 									]),
 								_List_Nil)
 							])),
@@ -5878,7 +5898,7 @@ var author$project$Main$mainTable = function (model) {
 							]),
 						_List_fromArray(
 							[
-								A2(author$project$Main$teamNameDiv, isAwayPP, model.awayTeam.fullName)
+								A2(author$project$Main$teamNameDiv, isAwayPP, model.awayTeam)
 							])),
 						A2(
 						elm$html$Html$td,
@@ -5889,7 +5909,7 @@ var author$project$Main$mainTable = function (model) {
 							]),
 						_List_fromArray(
 							[
-								A2(author$project$Main$teamNameDiv, isHomePP, model.homeTeam.fullName)
+								A2(author$project$Main$teamNameDiv, isHomePP, model.homeTeam)
 							]))
 					])),
 				A2(

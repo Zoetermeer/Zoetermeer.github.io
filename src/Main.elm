@@ -2,23 +2,16 @@ module Main exposing (main)
 
 import Array as Array
 import Browser
-import Html exposing (Attribute, Html, button, div, h1, img, table, text, td, tr)
+import Html exposing (Attribute, Html, br, button, div, h1, img, span, table, text, td, tr)
 import Html.Attributes exposing (align, class, height, src, style)
 import Html.Events exposing (onClick)
 import Time
 
 type alias Team =
-    { fullName : String
+    { city : String
+    , fullName : String
     , nickname : String
     , logoUrl : String
-    }
-
-
-mkTeam : String -> String -> String -> String -> String -> String -> Team
-mkTeam fullName nickname logoUrl color1 color2 color3 =
-    { fullName = fullName
-    , nickname = nickname
-    , logoUrl = logoUrl
     }
 
 
@@ -37,55 +30,63 @@ type alias Model =
 
 allTeams : List Team
 allTeams =
-    [ Team "Anaheim Ducks" "Ducks" "assets/images/anaheim-ducks.svg"
-    , Team "Arizona Coyotes" "Coyotes" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Coyotes_Primary.png"
-    , Team "Boston Bruins" "Bruins" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Bruins_Primary.png"
-    , Team "Buffalo Sabres" "Sabres" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sabres_Primary.png"
-    , Team "Calgary Flames" "Flames" "http://www.capsinfo.com/images/NHL_Team_Logos/calgary.png"
-    , Team "Carolina Hurricanes" "Hurricanes" "assets/images/carolina-hurricanes.svg"
-    , Team "Chicago Blackhawks" "Blackhawks" "http://www.capsinfo.com/images/NHL_Team_Logos/chicago.png"
-    , Team "Colorado Avalanche" "Avalanche" "http://www.capsinfo.com/images/NHL_Team_Logos/colorado.png"
-    , Team "Cyclones" "Cyclones" "https://myhockeyrankings.com/uploads/logos/00009b_a.png"
-    , Team "Dallas Stars" "Stars" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Stars_Primary.png"
-    , Team "Detroit Red Wings" "Red Wings" "assets/images/detroit-red-wings.svg"
-    , Team "Edmonton Oilers" "Oilers" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Oilers_Primary.png"
-    , Team "Falcons" "Falcons" "https://cdn4.sportngin.com/attachments/logo_graphic/5553/2208/falcons_white_hires_small.jpg"
-    , Team "Florida Panthers" "Panthers" "assets/images/florida-panthers.svg"
-    , Team "Hartford Whalers" "Whalers" "https://www.clipartmax.com/png/full/10-101501_whalers-hockey-team-based-on-their-percentage-of-the-nhl-logos-hartford.png"
-    , Team "Los Angeles Kings" "Kings" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Kings_Primary.png"
-    , Team "Montreal Canadiens" "Canadiens" "http://www.capsinfo.com/images/NHL_Team_Logos/montreal.png"
-    , Team "Nashville Predators" "Predators" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Predators_Primary.png"
-    , Team "New York Islanders" "Islanders" "http://www.capsinfo.com/images/NHL_Team_Logos/NY-Islanders-Primary.png"
-    , Team "New York Rangers" "Rangers" "http://www.capsinfo.com/images/NHL_Team_Logos/newyorkr.png"
-    , Team "Ottawa Senators" "Senators" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Senators_Primary.png"
-    , Team "Philadelphia Flyers" "Flyers" "assets/images/philadelphia-flyers.svg"
-    , Team "Pittsburgh Penguins" "Penguins" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Penguins_Primary.png"
-    , Team "San Jose Sharks" "Sharks" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Sharks_Primary.png"
-    , Team "St. Louis Blues" "Blues" "http://www.capsinfo.com/images/NHL_Team_Logos/stlouis.png"
-    , Team "Tampa Bay Lightning" "Lightning" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Lightning_Primary.png"
-    , Team "Toronto Maple Leafs" "Maple Leafs" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_MapleLeafs_Primary.png"
-    , Team "Vancouver Canucks" "Canucks" "assets/images/vancouver-canucks.svg"
-    , Team "Vegas Golden Knights" "Knights" "assets/images/las-vegas-knights.svg"
-    , Team "Washington Capitals" "Capitals" "assets/images/washington-capitals.svg"
-    , Team "Winnipeg Jets" "Jets" "http://www.capsinfo.com/images/NHL_Team_Logos/NHL_Jets_Primary.png"
-    , Team "Chicago Cubs" "Cubs" "http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_Cubs.png"
-    , Team "Chicago White Sox" "White Sox" "http://www.capsinfo.com/images/MLB_Team_Logos/Chicago_White_Sox.png"
-    , Team "Los Angeles Dodgers" "Dodgers" "http://www.capsinfo.com/images/MLB_Team_Logos/LosAngeles_Dodgers.png"
-    , Team "Milwaukee Brewers" "Brewers" "http://www.capsinfo.com/images/MLB_Team_Logos/Milwaukee_Brewers.png"
+    [ Team "Anaheim" "Anaheim Ducks" "Ducks" "assets/images/anaheim-ducks.svg"
+    , Team "Arizona" "Arizona Coyotes" "Coyotes" "assets/images/arizona-coyotes.svg"
+    , Team "Boston" "Boston Bruins" "Bruins" "assets/images/boston-bruins.svg"
+    , Team "Buffalo" "Buffalo Sabres" "Sabres" "assets/images/buffalo-sabres.svg"
+    , Team "Calgary" "Calgary Flames" "Flames" "assets/images/calgary-flames.svg"
+    , Team "Carolina" "Carolina Hurricanes" "Hurricanes" "assets/images/carolina-hurricanes.svg"
+    , Team "Chicago" "Chicago Blackhawks" "Blackhawks" "assets/images/chicago-blackhawks.svg"
+    , Team "Colorado" "Colorado Avalanche" "Avalanche" "assets/images/colorado-avalanche.svg"
+    , Team "Columbus" "Columbus Blue Jackets" "Blue Jackets" "assets/images/columbus-blue-jackets.svg"
+    , Team "North Shore" "Cyclones" "Cyclones" "assets/images/cyclones.png"
+    , Team "Dallas" "Dallas Stars" "Stars" "assets/images/dallas-stars.svg"
+    , Team "Detroit" "Detroit Red Wings" "Red Wings" "assets/images/detroit-red-wings.svg"
+    , Team "Edmonton" "Edmonton Oilers" "Oilers" "assets/images/edmonton-oilers.svg"
+    , Team "Chicago" "Falcons" "Falcons" "assets/images/falcons.jpg"
+    , Team "Florida" "Florida Panthers" "Panthers" "assets/images/florida-panthers.svg"
+    , Team "Hartford" "Hartford Whalers" "Whalers" "assets/images/hartford-whalers.svg"
+    , Team "Los Angeles" "Los Angeles Kings" "Kings" "assets/images/los-angeles-kings.svg"
+    , Team "Minnesota" "Minnesota Wild" "Wild" "assets/images/minnesota-wild.svg"
+    , Team "Montreal" "Montreal Canadiens" "Canadiens" "assets/images/montreal-canadiens.svg"
+    , Team "Nashville" "Nashville Predators" "Predators" "assets/images/nashville-predators.svg"
+    , Team "New Jersey" "New Jersey Devils" "Devils" "assets/images/new-jersey-devils.svg"
+    , Team "New York" "New York Islanders" "Islanders" "assets/images/ny-islanders.svg"
+    , Team "New York" "New York Rangers" "Rangers" "assets/images/ny-rangers.svg"
+    , Team "Ottawa" "Ottawa Senators" "Senators" "assets/images/ottawa-senators.svg"
+    , Team "Philadelphia" "Philadelphia Flyers" "Flyers" "assets/images/philadelphia-flyers.svg"
+    , Team "Pittsburgh" "Pittsburgh Penguins" "Penguins" "assets/images/pittsburgh-penguins.svg"
+    , Team "Quebec" "Quebec Nordiques" "Nordiques" "assets/images/quebec-nordiques.svg"
+    , Team "San Jose" "San Jose Sharks" "Sharks" "assets/images/san-jose-sharks.svg"
+    , Team "St. Louis" "St. Louis Blues" "Blues" "assets/images/st-louis-blues.svg"
+    , Team "Tampa Bay" "Tampa Bay Lightning" "Lightning" "assets/images/tampa-bay-lightning.svg"
+    , Team "Toronto" "Toronto Maple Leafs" "Leafs" "assets/images/toronto-maple-leafs.svg"
+    , Team "Vancouver" "Vancouver Canucks" "Canucks" "assets/images/vancouver-canucks.svg"
+    , Team "Vegas" "Vegas Golden Knights" "Knights" "assets/images/las-vegas-knights.svg"
+    , Team "Washington" "Washington Capitals" "Capitals" "assets/images/washington-capitals.svg"
+    , Team "Winnipeg" "Winnipeg Jets" "Jets" "assets/images/winnipeg-jets.svg"
+    , Team "Chicago" "Chicago Cubs" "Cubs" "assets/images/chicago-cubs.svg"
+    , Team "Chicago" "Chicago White Sox" "White Sox" "assets/images/chicago-white-sox.svg"
+    , Team "Los Angeles" "Los Angeles Dodgers" "Dodgers" "assets/images/la-dodgers.svg"
+    , Team "Milwaukee" "Milwaukee Brewers" "Brewers" "assets/images/milwaukee-brewers.svg"
 
 -- NFL teams
-    , Team "Carolina Panthers" "Panthers" "https://www.clipartmax.com/png/full/22-220847_being-a-panthers-fan-pays-off-in-more-ways-than-one-fathead.png"
-    , Team "Dallas Cowboys" "Cowboys" "https://www.clipartmax.com/png/full/120-1207993_dallas-cowboys-logo-dallas-cowboys-helmet-logo.png"
-    , Team "Jacksonville Jaguars" "Jaguars" "https://www.clipartmax.com/png/full/113-1133772_its-the-day-the-jaguars-along-with-every-other-team-jacksonville-jaguars.png"
-    , Team "Washington Redskins" "Redskins" "https://www.clipartmax.com/png/full/216-2169983_redskins-helmet-clip-art-washington-redskins-helmet.png"
+    , Team "Carolina" "Carolina Panthers" "Panthers" "assets/images/carolina-panthers.svg"
+    , Team "Dallas" "Dallas Cowboys" "Cowboys" "assets/images/dallas-cowboys.svg"
+    , Team "Jacksonville" "Jacksonville Jaguars" "Jaguars" "assets/images/jacksonville-jaguars.svg"
+    , Team "Minnesota" "Minnesota Vikings" "Vikings" "assets/images/minnesota-vikings.svg"
+    , Team "Oakland" "Oakland Raiders" "Raiders" "assets/images/oakland-raiders.svg"
+    , Team "Philadelphia" "Philadelphia Eagles" "Eagles" "assets/images/philadelphia-eagles.svg"
+    , Team "Tennessee" "Tennessee Titans" "Titans" "assets/images/tennessee-titans.svg"
+    , Team "Washington" "Washington Redskins" "Redskins" "assets/images/washington-redskins.svg"
 
 -- Soccer teams
-    , Team "FC Barcelona" "Barcelona" "https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png"
-    , Team "Arsenal FC" "Arsenal" "https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png"
+    , Team "FC" "FC Barcelona" "Barcelona" "https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png"
+    , Team "The" "Arsenal FC" "Arsenal" "https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png"
 
 -- Random
-    , Team "Galactic Empire" "Empire" "https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png"
-    , Team "Rebel Alliance" "Alliance" "https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png"
+    , Team "Galactic" "Galactic Empire" "Empire" "https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png"
+    , Team "Rebel" "Rebel Alliance" "Alliance" "https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png"
     ]
 
 
@@ -241,7 +242,7 @@ mainTable model =
   table [ class "scoreboard" ]
   [ tr []
     [ td [ align "center", onClick (NextTeam Away), class "noselect", style "width" "50%" ]
-      [ img [ src model.awayTeam.logoUrl, style "max-height" "150px", style "max-width" "150px", style "width" "auto", style "height" "auto" ] []
+      [ img [ src model.awayTeam.logoUrl, style "height" "150px", style "max-width" "150px" ] []
       ]
     , td [ align "center", onClick (NextTeam Home), class "noselect", style "width" "50%" ]
       [ img [ src model.homeTeam.logoUrl, style "max-height" "150px", style "max-width" "150px", style "width" "auto", style "height" "auto"] []
@@ -249,9 +250,9 @@ mainTable model =
     ]
   , tr []
     [ td [ class "bordered-dark", style "background" "#ccc" ]
-      [ teamNameDiv isAwayPP model.awayTeam.fullName ]
+      [ teamNameDiv isAwayPP model.awayTeam ]
     , td [ class "bordered-dark", style "background" "#ccc" ]
-      [ teamNameDiv isHomePP model.homeTeam.fullName ]
+      [ teamNameDiv isHomePP model.homeTeam ]
     ]
   , tr []
     [ td [ onClick (IncrScore Away), class ("bordered noselect scoreboard-text large-font " ++ awayScoreGlow), align "center" ]
@@ -276,10 +277,13 @@ mainTable model =
   ]
 
 
-teamNameDiv : Bool -> String -> Html Msg
-teamNameDiv isPP name =
+teamNameDiv : Bool -> Team -> Html Msg
+teamNameDiv isPP team =
   let cls = if isPP then "blue-bg big-white-text" else "sunken-text" in
-  div [ align "center", class cls ] [ text (String.toUpper name) ]
+  div [ align "center", class cls ]
+      [ span [ style "font-size" ".3em" ] [ text (String.toUpper team.city) ]
+      , br [] []
+      ,  text (String.toUpper team.nickname) ]
 
 
 powerPlayButton : Int -> Msg -> Html Msg
