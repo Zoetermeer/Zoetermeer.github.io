@@ -136,13 +136,16 @@
 	<div class="hidden">
 		<script type="text/javascript">
 			<!--//--><![CDATA[//><!--
-				var images = new Array()
+				var images = new Array();
+				window.alert('preload');
+
 				function preload() {
 					for (i = 0; i < preload.arguments.length; i++) {
-						images[i] = new Image()
-						images[i].src = preload.arguments[i]
+						images[i] = new Image();
+						images[i].src = preload.arguments[i];
 					}
 				}
+
 				preload(
 					"assets/images/anaheim-ducks.svg",
 					"assets/images/arizona-coyotes.svg",
@@ -193,7 +196,7 @@
 					"assets/images/winnipeg-jets.svg",
 					"assets/images/anaheim-ducks.svg",
           "assets/images/arizona-coyotes.svg"
-				)
+				);
 			//--><!]]>
 		</script>
 	</div>

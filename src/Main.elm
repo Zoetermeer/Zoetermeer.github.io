@@ -28,10 +28,18 @@ type alias Model =
     }
 
 
+defaultHome : Team
+defaultHome = Team "Anaheim" "Anaheim Ducks" "Ducks" "assets/images/anaheim-ducks.svg"
+
+
+defaultAway : Team
+defaultAway = Team "Arizona" "Arizona Coyotes" "Coyotes" "assets/images/arizona-coyotes.svg"
+
+
 allTeams : List Team
 allTeams =
-    [ Team "Anaheim" "Anaheim Ducks" "Ducks" "assets/images/anaheim-ducks.svg"
-    , Team "Arizona" "Arizona Coyotes" "Coyotes" "assets/images/arizona-coyotes.svg"
+    [ defaultHome
+    , defaultAway
     , Team "Boston" "Boston Bruins" "Bruins" "assets/images/boston-bruins.svg"
     , Team "Buffalo" "Buffalo Sabres" "Sabres" "assets/images/buffalo-sabres.svg"
     , Team "Calgary" "Calgary Flames" "Flames" "assets/images/calgary-flames.svg"
@@ -103,8 +111,6 @@ main =
 init : () -> (Model, Cmd Msg)
 init _ =
     let teamArray = Array.fromList allTeams
-        defaultAway = forceGet teamArray 0
-        defaultHome = forceGet teamArray 1
         mtModel = { teams = teamArray
                   , awayTeam = defaultAway
                   , awayTeamIndex = 0
@@ -202,7 +208,7 @@ update msg model =
 
 padNum : Int -> String
 padNum n =
-  if n < 10 then "0" ++ Debug.toString n else Debug.toString n
+  if n < 10 then "0" ++ String.fromInt n else String.fromInt n
 
 
 toDurationStr : Int -> String
@@ -216,8 +222,11 @@ toDurationStr ms =
 selectTeam : Model -> (Array.Array Team -> Int -> Int) -> (Model -> Int) -> (Int, Team)
 selectTeam model getNewIndex getCurIndex =
     let i = getNewIndex model.teams (getCurIndex model)
-        newTeam = forceGet model.teams i
-    in (i, newTeam)
+        newTeam = Array.get i model.teams
+    in
+    case newTeam of
+      Nothing -> (0, defaultHome)
+      Just team -> (i, team)
 
 
 view : Model -> Html Msg
@@ -256,9 +265,9 @@ mainTable model =
     ]
   , tr []
     [ td [ onClick (IncrScore Away), class ("bordered noselect scoreboard-text large-font " ++ awayScoreGlow), align "center" ]
-      [ text (Debug.toString model.awayScore) ]
+      [ text (String.fromInt model.awayScore) ]
     , td [ onClick (IncrScore Home), class ("bordered noselect scoreboard-text large-font " ++ homeScoreGlow), align "center" ]
-      [ text (Debug.toString model.homeScore) ]
+      [ text (String.fromInt model.homeScore) ]
     ]
   , tr []
     [ td [ class "noselect", style "background" "#ccc" ]
@@ -299,14 +308,6 @@ powerPlayButton msLeft msg =
 
 decrButton : Msg -> List (Attribute Msg) -> Html Msg
 decrButton msg attrs = div ([ class "btn subtract-button noselect", onClick msg ] ++ attrs) [ text "RESET" ]
-
-
-forceGet : Array.Array a -> Int -> a
-forceGet xs i =
-    let x = Array.get i xs in
-    case x of
-        Just v -> v
-        _      -> Debug.todo "Cannot happen"
 
 
 nextIndex : Array.Array a -> Int -> Int
