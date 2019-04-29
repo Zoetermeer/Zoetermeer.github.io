@@ -78,12 +78,16 @@ allTeams =
 
 -- MLB teams
     , Team "Arizona" "Arizona Diamondbacks" "Diamondbacks" "assets/images/arizona-diamondbacks.svg"
+    , Team "Boston" "Boston Red Sox" "Red Sox" "assets/images/boston-red-sox.svg"
     , Team "Chicago" "Chicago Cubs" "Cubs" "assets/images/chicago-cubs.svg"
     , Team "Chicago" "Chicago White Sox" "White Sox" "assets/images/chicago-white-sox.svg"
     , Team "Los Angeles" "Los Angeles Dodgers" "Dodgers" "assets/images/la-dodgers.svg"
     , Team "Milwaukee" "Milwaukee Brewers" "Brewers" "assets/images/milwaukee-brewers.svg"
     , Team "New York" "New York Mets" "Mets" "assets/images/new-york-mets.svg"
+    , Team "New York" "New York Yankees" "Yankees" "assets/images/ny-yankees.svg"
     , Team "Pittsburgh" "Pittsburgh Pirates" "Pirates" "assets/images/pittsburgh-pirates.svg"
+    , Team "St. Louis" "St. Louis Cardinals" "Cardinals" "assets/images/st-louis-cardinals.svg"
+    , Team "Texas" "Texas Rangers" "Rangers" "assets/images/texas-rangers.svg"
 
 -- NFL teams
     , Team "Carolina" "Carolina Panthers" "Panthers" "assets/images/carolina-panthers.svg"
