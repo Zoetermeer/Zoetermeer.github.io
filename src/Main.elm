@@ -87,6 +87,7 @@ allTeams =
     , Team "New York" "New York Yankees" "Yankees" "assets/images/ny-yankees.svg"
     , Team "Oakland" "Oakland Athletics" "Athletics" "assets/images/oakland-athletics.svg"
     , Team "Pittsburgh" "Pittsburgh Pirates" "Pirates" "assets/images/pittsburgh-pirates.svg"
+    , Team "San Diego" "San Diego Padres" "Padres" "assets/images/san-diego-padres.svg"
     , Team "St. Louis" "St. Louis Cardinals" "Cardinals" "assets/images/st-louis-cardinals.svg"
     , Team "Texas" "Texas Rangers" "Rangers" "assets/images/texas-rangers.svg"
 
