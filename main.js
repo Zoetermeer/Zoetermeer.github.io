@@ -4505,6 +4505,7 @@ var author$project$Main$allTeams = _List_fromArray(
 		A4(author$project$Main$Team, 'Milwaukee', 'Milwaukee Brewers', 'Brewers', 'assets/images/milwaukee-brewers.svg'),
 		A4(author$project$Main$Team, 'New York', 'New York Mets', 'Mets', 'assets/images/new-york-mets.svg'),
 		A4(author$project$Main$Team, 'New York', 'New York Yankees', 'Yankees', 'assets/images/ny-yankees.svg'),
+		A4(author$project$Main$Team, 'Oakland', 'Oakland Athletics', 'Athletics', 'assets/images/oakland-athletics.svg'),
 		A4(author$project$Main$Team, 'Pittsburgh', 'Pittsburgh Pirates', 'Pirates', 'assets/images/pittsburgh-pirates.svg'),
 		A4(author$project$Main$Team, 'St. Louis', 'St. Louis Cardinals', 'Cardinals', 'assets/images/st-louis-cardinals.svg'),
 		A4(author$project$Main$Team, 'Texas', 'Texas Rangers', 'Rangers', 'assets/images/texas-rangers.svg'),
