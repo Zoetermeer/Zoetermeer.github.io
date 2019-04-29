@@ -78,12 +78,15 @@ allTeams =
 
 -- MLB teams
     , Team "Arizona" "Arizona Diamondbacks" "Diamondbacks" "assets/images/arizona-diamondbacks.svg"
+    , Team "Atlanta" "Atlanta Braves" "Braves" "assets/images/atlanta-braves.svg"
+    , Team "Baltimore" "Baltimore Orioles" "Orioles" "assets/images/baltimore-orioles.svg"
     , Team "Boston" "Boston Red Sox" "Red Sox" "assets/images/boston-red-sox.svg"
     , Team "Chicago" "Chicago Cubs" "Cubs" "assets/images/chicago-cubs.svg"
     , Team "Chicago" "Chicago White Sox" "White Sox" "assets/images/chicago-white-sox.svg"
     , Team "Cincinnati" "Cincinnati Reds" "Reds" "assets/images/cincinnati-reds.svg"
     , Team "Cleveland" "Cleveland Indians" "Indians" "assets/images/cleveland-indians.svg"
     , Team "Colorado" "Colorado Rockies" "Rockies" "assets/images/colorado-rockies.svg"
+    , Team "Detroit" "Detroit Tigers" "Tigers" "assets/images/detroit-tigers.svg"
     , Team "Houston" "Houston Astros" "Astros" "assets/images/houston-astros.svg"
     , Team "Kansas City" "Kansas City Royals" "Royals" "assets/images/kc-royals.svg"
     , Team "Los Angeles" "Los Angeles Angels" "Angels" "assets/images/la-angels.svg"
@@ -94,6 +97,7 @@ allTeams =
     , Team "New York" "New York Mets" "Mets" "assets/images/new-york-mets.svg"
     , Team "New York" "New York Yankees" "Yankees" "assets/images/ny-yankees.svg"
     , Team "Oakland" "Oakland Athletics" "Athletics" "assets/images/oakland-athletics.svg"
+    , Team "Philadelphia" "Philadelphia Phillies" "Phillies" "assets/images/philadelphia-phillies.svg"
     , Team "Pittsburgh" "Pittsburgh Pirates" "Pirates" "assets/images/pittsburgh-pirates.svg"
     , Team "San Francisco" "San Francisco Giants" "Giants" "assets/images/sf-giants.svg"
     , Team "San Diego" "San Diego Padres" "Padres" "assets/images/san-diego-padres.svg"
@@ -101,6 +105,7 @@ allTeams =
     , Team "St. Louis" "St. Louis Cardinals" "Cardinals" "assets/images/st-louis-cardinals.svg"
     , Team "Tampa Bay" "Tampa Bay Rays" "Rays" "assets/images/tb-rays.svg"
     , Team "Texas" "Texas Rangers" "Rangers" "assets/images/texas-rangers.svg"
+    , Team "Toronto" "Toronto Blue Jays" "Blue Jays" "assets/images/toronto-blue-jays.svg"
     , Team "Washington" "Washington Nationals" "Nationals" "assets/images/washington-nationals.svg"
 
 -- NFL teams
