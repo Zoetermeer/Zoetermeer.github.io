@@ -123,6 +123,8 @@ allTeams =
 -- Soccer teams
     , Team "FC" "FC Barcelona" "Barcelona" "https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png"
     , Team "The" "Arsenal FC" "Arsenal" "https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png"
+    , Team "Liverpool" "Liverpool" "" "assets/images/liverpool.svg"
+    , Team "Tottenham" "Tottenham Hostpur" "Hotspur" "assets/images/tottenham-hotspur.svg"
 
 -- Random
     , Team "Galactic" "Galactic Empire" "Empire" "https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png"

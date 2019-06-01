@@ -4539,6 +4539,8 @@ var author$project$Main$allTeams = _List_fromArray(
 		A4(author$project$Main$Team, 'Washington', 'Washington Redskins', 'Redskins', 'assets/images/washington-redskins.svg'),
 		A4(author$project$Main$Team, 'FC', 'FC Barcelona', 'Barcelona', 'https://www.clipartmax.com/png/full/98-980533_bar%C3%A7a-logo-fc-barcelona.png'),
 		A4(author$project$Main$Team, 'The', 'Arsenal FC', 'Arsenal', 'https://www.clipartmax.com/png/full/98-980720_arsenal-fc-png.png'),
+		A4(author$project$Main$Team, 'Liverpool', 'Liverpool', '', 'assets/images/liverpool.svg'),
+		A4(author$project$Main$Team, 'Tottenham', 'Tottenham Hostpur', 'Hotspur', 'assets/images/tottenham-hotspur.svg'),
 		A4(author$project$Main$Team, 'Galactic', 'Galactic Empire', 'Empire', 'https://www.clipartmax.com/png/full/42-422348_imperial-navy-star-wars-empire-png.png'),
 		A4(author$project$Main$Team, 'Rebel', 'Rebel Alliance', 'Alliance', 'https://www.clipartmax.com/png/full/31-313022_resistance-by-pointingmonkey-star-wars-rebel-symbol.png')
 	]);
